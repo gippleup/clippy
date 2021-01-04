@@ -1,5 +1,5 @@
 import Config from 'react-native-config'
-import { convertOptionToQuery } from 'src/utils/api';
+import { convertOptionToQuery } from '@utils/api';
 import { Article } from './nyTimes/schema';
 const {NYTIMES_API_KEY} = Config;
 const API_BASE = "https://api.nytimes.com/svc/";

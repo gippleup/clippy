@@ -1,3 +1,3 @@
 import rootReducer from '@redux/reducers/index';
 
-export type ReduxRootState = typeof rootReducer;
+export type ReduxRootState = ReturnType<typeof rootReducer>;

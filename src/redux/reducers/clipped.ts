@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { Clipped } from "src/api/local/schema";
+import { Clipped } from "@api/local/schema";
 
 type ClippedState = {
   articles: Clipped[];

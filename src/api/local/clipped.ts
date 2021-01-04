@@ -1,5 +1,6 @@
-import { mapToArray } from "src/utils/array";
-import { getLocalData, setLocalData } from "src/utils/storage";
+import { mapToArray } from "@utils/array";
+import { isIndicated, getIndicatorIndex } from "@utils/searchResult";
+import { getLocalData, setLocalData } from "@utils/storage";
 import { ArticleIndicator, Clipped } from "./schema";
 
 const LOCAL_STORAGE_KEY = "CLIPPED";
@@ -52,19 +53,6 @@ const _getValidData = async (): Promise<Clipped[]> => {
   return validatedData;
 }
 
-const _indicatesItems = (indicator: ArticleIndicator, item: Clipped) => {
-  return item.publisher === indicator.publisher && item.id === indicator.id;
-}
-
-const _getIndicatorIndex = (indicators: ArticleIndicator[], item: Clipped) => {
-  return indicators.findIndex((indicator) => _indicatesItems(indicator, item));
-}
-
-const _isIndicated = (indicators: ArticleIndicator[], item: Clipped) => {
-  const indicatorIndex = _getIndicatorIndex(indicators, item);
-  return indicatorIndex !== -1;
-}
-
 const initialize = async() => setLocalData(LOCAL_STORAGE_KEY, defaultValue);
 
 const set = async(data: Clipped[]) => setLocalData(LOCAL_STORAGE_KEY, data);
@@ -74,14 +62,15 @@ const get = async() => await _getValidData();
 const push = async(item: Clipped | Clipped[]) => {
   const items = mapToArray(item);
   const storedData = await get();
-  const concatenated = storedData.concat(items);
+  const filtered = storedData.filter((clipped) => !isIndicated(items, clipped));
+  const concatenated = filtered.concat(items);
   return set(concatenated);
 }
 
 const remove = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
-  const filtered = storedData.filter((item) => _isIndicated(indicators, item) === false);
+  const filtered = storedData.filter((item) => isIndicated(indicators, item) === false);
   return set(filtered);
 }
 
@@ -89,8 +78,7 @@ const pin = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
-    const isIndicated = _isIndicated(indicators, item);
-    if (!isIndicated) return item;
+    if (!isIndicated(indicators, item)) return item;
     return {...item, pinned: true};
   });
   return set(mapped);
@@ -100,8 +88,7 @@ const unpin = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
-    const isIndicated = _isIndicated(indicators, item);
-    if (!isIndicated) return item;
+    if (!isIndicated(indicators, item)) return item;
     return {...item, pinned: false};
   });
   return set(mapped);
@@ -111,7 +98,7 @@ const addTag = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
-    const indicatorIndex = _getIndicatorIndex(indicators, item);
+    const indicatorIndex = getIndicatorIndex(indicators, item);
     if (indicatorIndex === -1) return item;
     const { tag = "" } = indicators[indicatorIndex];
     const filteredTag = item.tag
@@ -126,7 +113,7 @@ const removeTag = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
-    const indicatorIndex = _getIndicatorIndex(indicators, item);
+    const indicatorIndex = getIndicatorIndex(indicators, item);
     if (indicatorIndex === -1) return item;
     const { tag = "" } = indicators[indicatorIndex];
     const filteredTag = item.tag?.filter((str) => str !== tag);
@@ -139,7 +126,7 @@ const clearTags = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
-    if (_isIndicated(indicators, item) === false) return item;
+    if (isIndicated(indicators, item) === false) return item;
     return {...item, tag: []};
   });
   return set(mapped);

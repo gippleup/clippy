@@ -6,12 +6,14 @@ module.exports = {
       extensions: [".js", ".jsx", ".ts", ".tsx", ".ios.js", ".android.js", ".json"],
       alias: {
         "src": "./src",
+        "@api": "./src/api",
+        "@colortheme": "./src/colortheme",
         "@components": "./src/components",
         "@redux": "./src/redux",
         "@router": "./src/router",
         "@screens": "./src/screens",
-        "@utils": "./src/utils",
         "@types": "./src/types",
+        "@utils": "./src/utils",
       }
     }]
   ]

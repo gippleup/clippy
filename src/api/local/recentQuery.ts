@@ -1,4 +1,5 @@
-import { getLocalData, setLocalData } from "src/utils/storage";
+import { mapToArray } from "@utils/array";
+import { getLocalData, setLocalData } from "@utils/storage";
 import { RecentQuery, RecentQueryLocalStorage } from "./schema";
 
 const LOCAL_STORAGE_KEY = "RECENT_QUERY";
@@ -55,13 +56,15 @@ const get = async(limit = 5): Promise<RecentQuery[]> => {
 }
 
 const push = async(query: string | string[]) => {
+  const queries = mapToArray(query);
   const lastId = await _getCount();
   const newIdStart = lastId + 1;
   const validData = await _getValidData();
   const items = Array.isArray(query)
     ? query.map((q, i) => _mapQueryToItem(q, newIdStart + i))
     : [_mapQueryToItem(query, newIdStart)];
-  const newItems = validData.queries.concat(items);
+  const filtered = validData.queries.filter((q) => queries.indexOf(q.value) === -1);
+  const newItems = filtered.concat(items);
   await set(newItems)
 }
 

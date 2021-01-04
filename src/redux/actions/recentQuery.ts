@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import localApi from "src/api/local";
+import localApi from "@api/local";
 
 const {recentQuery} = localApi;
 const get = createAsyncThunk(

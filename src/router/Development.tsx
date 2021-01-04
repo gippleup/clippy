@@ -1,6 +1,6 @@
 import Developer from '@screens/Developer';
 import ButtonTester from '@screens/Testers/ButtonTester';
-import { defineCustomRoute } from 'src/utils/router';
+import { defineCustomRoute } from '@utils/router';
 
 const routes = {
   ButtonTester: defineCustomRoute({

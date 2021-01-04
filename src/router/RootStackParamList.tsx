@@ -1,4 +1,4 @@
-import { CustomRouteOption } from 'src/utils/router';
+import { CustomRouteOption } from '@utils/router';
 import DevRoute from './Development';
 import ProRoute from './Production';
 

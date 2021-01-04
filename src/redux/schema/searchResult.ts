@@ -1,4 +1,4 @@
-import { ShortenedArticle } from "src/api/local/schema";
+import { ShortenedArticle } from "@api/local/schema";
 
 export type SearchResult = ShortenedArticle & {
   clipped: boolean;

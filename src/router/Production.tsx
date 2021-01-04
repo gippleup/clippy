@@ -1,5 +1,5 @@
 import Main from '@screens/Main';
-import { defineCustomRoute } from 'src/utils/router';
+import { defineCustomRoute } from '@utils/router';
 
 const routes = {
   Main: defineCustomRoute({

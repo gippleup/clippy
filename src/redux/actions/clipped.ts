@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import localApi from "src/api/local";
-import { ArticleIndicator, Clipped } from "src/api/local/schema";
+import localApi from "@api/local";
+import { ArticleIndicator, Clipped } from "@api/local/schema";
 
 const {clipped} = localApi;
 
@@ -51,7 +51,7 @@ const get = createAsyncThunk(
 
 const clearTags = createAsyncThunk(
   'clipped/clearTags',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.clearTags(indicator);
     const updated = await clipped.get();
     return updated;
@@ -60,7 +60,7 @@ const clearTags = createAsyncThunk(
 
 const unclip = createAsyncThunk(
   'clipped/unclip',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.remove(indicator);
     const updated = await clipped.get();
     return updated;
@@ -69,7 +69,7 @@ const unclip = createAsyncThunk(
 
 const addTag = createAsyncThunk(
   'clipped/addTag',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.addTag(indicator);
     const updated = await clipped.get();
     return updated;
@@ -78,7 +78,7 @@ const addTag = createAsyncThunk(
 
 const removeTag = createAsyncThunk(
   'clipped/removeTag',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.removeTag(indicator);
     const updated = await clipped.get();
     return updated;
@@ -87,7 +87,7 @@ const removeTag = createAsyncThunk(
 
 const pin = createAsyncThunk(
   'clipped/pin',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.pin(indicator);
     const updated = await clipped.get();
     return updated;
@@ -96,7 +96,7 @@ const pin = createAsyncThunk(
 
 const unpin = createAsyncThunk(
   'clipped/unpin',
-  async (indicator: ArticleIndicator) => {
+  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
     await clipped.unpin(indicator);
     const updated = await clipped.get();
     return updated;

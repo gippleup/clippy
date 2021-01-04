@@ -15,7 +15,7 @@ import DevRoutes from '@router/Development';
 import Developer from '@screens/Developer.tsx';
 import ProRoutes from '@router/Production';
 import Config from 'react-native-config';
-import { renderCustomRoutes } from 'src/utils/router';
+import { renderCustomRoutes } from '@utils/router';
 import 'react-native-gesture-handler';
 
 const {ENV = "DEV"} = Config;
