@@ -25,13 +25,14 @@ type ArticleSearchResponse = {
   }
 }
 
-export const fetchArticles = (option: ArticleSearchOption): Promise<ArticleSearchResponse> => {
+export const fetchArticles = async(option: ArticleSearchOption): Promise<ArticleSearchResponse | null> => {
   const query = convertOptionToQuery(option);
   const url = `${API_BASE}search/v2/articlesearch.json?${query}&api-key=${NYTIMES_API_KEY}`;
-  return fetch(url)
-  .then((res) => res.json())
-  .catch((err) => {
-    console.log(err);
+  try {
+    const res = await fetch(url);
+    const json = res.json();
+    return json;
+  } catch (e) {
     return null;
-  });
+  }
 }
