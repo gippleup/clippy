@@ -7,11 +7,10 @@ module.exports = {
       alias: {
         "src": "./src",
         "@api": "./src/api",
-        "@colortheme": "./src/colortheme",
         "@components": "./src/components",
         "@hooks": "./src/hooks",
+        "@navigation": "./src/navigation",
         "@redux": "./src/redux",
-        "@router": "./src/router",
         "@screens": "./src/screens",
         "@styled": "./src/styled",
         "@types": "./src/types",
