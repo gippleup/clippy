@@ -43,7 +43,7 @@ const get = async(limit = 5): Promise<string[]> => {
 }
 
 const push = async(query: string | string[]) => {
-  const queries = mapToArray(query);
+  const queries = mapToArray(query).filter((q) => q !== "");
   const validData = await _getValidData();
   const filtered = validData.queries.filter((q) => queries.indexOf(q) === -1);
   const updated = filtered.concat(query);
