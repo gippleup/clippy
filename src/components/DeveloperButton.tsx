@@ -8,28 +8,37 @@ type DeveloperButtonProps = {
   screenName: string;
   text?: string;
   navigation: NavigationProp<any>;
-  params?: Object;
+  initialParams?: Object;
+  type?: "dev" | "production";
 }
 
 const DeveloperButton: React.FC<DeveloperButtonProps> = (props) => {
-  const {screenName, navigation, text, params} = props;
-  const onPress = () => navigation.navigate(screenName, params);
+  const {screenName, navigation, text, initialParams, type} = props;
+  const onPress = () => navigation.navigate(screenName, initialParams);
+  const relevantTheme = type === "dev" ? styles.devTheme : styles.productionTheme;
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text style={styles.button}>{text || screenName}</Text>
+      <Text style={[styles.button, relevantTheme]}>{text || screenName}</Text>
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#543864",
     padding: 20,
-    color: "#ff6464",
     fontSize: 20,
     fontWeight: "bold",
-    borderBottomColor: chroma("#543864").brighten().hex(),
     borderBottomWidth: 0.5,
+  },
+  devTheme: {
+    borderBottomColor: "green",
+    backgroundColor: "black",
+    color: "mediumseagreen",
+  },
+  productionTheme: {
+    borderBottomColor: "tomato",
+    backgroundColor: "black",
+    color: "coral",
   }
 })
 

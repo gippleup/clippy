@@ -1,15 +1,14 @@
 import React from 'react'
 import {createStackNavigator, StackNavigationOptions} from '@react-navigation/stack'
 
-export type CustomRouteOption = {
+export type CustomRouteOption<T={}> = {
   devName: string,
-  component: React.FC | React.ComponentClass,
-  params?: Object,
+  component: React.FC<any> | React.ComponentClass<any>,
+  initialParams: T,
   options?: StackNavigationOptions;
 }
 
-export const defineCustomRoute = (routeOption: CustomRouteOption): CustomRouteOption => ({
-  params: undefined,
+export const defineCustomRoute: <T={}>(routeOption: CustomRouteOption<T>) => CustomRouteOption<T> = (routeOption) => ({
   options: {},
   ...routeOption,
 });

@@ -3,9 +3,11 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import Testers from '@navigation/routes/Development';
+import routes from '@navigation/routes';
 import { CustomRouteOption } from '@utils/navigation';
 import { RootStackParamList } from '@navigation/routes';
+
+const isOnProductionRoute = (screenName: string) => Object.keys(routes.PRODUCTION).indexOf(screenName) !== -1;
 
 type DeveloperProps = {
   navigation: StackNavigationProp<RootStackParamList, any>;
@@ -22,13 +24,16 @@ export class Developer extends Component<DeveloperProps> {
     const {props} = this;
     const {navigation} = props;
     const [screenName, screenDesc] = entry;
-    const {devName, params} = screenDesc;
+    const {devName, initialParams} = screenDesc;
+    const type = isOnProductionRoute(screenName) ? "production" : "dev";
     return (
       <DeveloperButton
         key={screenName}
         navigation={navigation}
         screenName={screenName}
+        initialParams={initialParams}
         text={devName}
+        type={type}
       />
     )
   }
@@ -37,7 +42,7 @@ export class Developer extends Component<DeveloperProps> {
     const {renderButton} = this;
     return (
       <View style={styles.container}>
-        {Object.entries(Testers).map(renderButton)}
+        {Object.entries(routes.DEV).map(renderButton)}
       </View>
     )
   }
