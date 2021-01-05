@@ -50,12 +50,13 @@ export type Byline = {
 }
 
 export type Article = {
+  abstract: string;
   web_url: string;
   snippet: string;
   print_page: number;
   source: string;
   multimedia: Multimedia[];
-  headline: Headline[];
+  headline: Headline;
   keywords: Keyword[];
   pub_date: string;
   document_type: string;
