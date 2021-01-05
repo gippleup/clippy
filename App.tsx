@@ -12,26 +12,22 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator,  } from '@react-navigation/stack';
 import { Provider } from 'react-redux'
 import React from 'react';
-import DevRoutes from '@router/Development';
 import Developer from '@screens/Developer.tsx';
-import ProRoutes from '@router/Production';
 import Config from 'react-native-config';
-import { renderCustomRoutes } from '@utils/router';
+import { renderCustomRoutes } from '@utils/navigation';
+import routes from '@navigation/routes';
 import 'react-native-gesture-handler';
 import store from '@redux/store';
 
 const {ENV = "DEV"} = Config;
 declare const global: {HermesInternal: null | {}};
 
-const Stack = createStackNavigator();
-
-const DevScreens = renderCustomRoutes({Stack, routes: DevRoutes});
-const ProductonScreens = renderCustomRoutes({Stack, routes: ProRoutes});
+const RootStack = createStackNavigator();
 
 const renderDevMain = () => {
   if (ENV !== "DEV") return null;
   return (
-    <Stack.Screen
+    <RootStack.Screen
       options={{
         headerTintColor: "white",
         headerStyle: {backgroundColor: "black"}
@@ -42,16 +38,17 @@ const renderDevMain = () => {
   )
 }
 
-const Screens = ENV === "DEV" ? DevScreens : ProductonScreens;
 const initialRouteName = ENV === "DEV" ? "Developer" : "Main";
+const Screens = renderCustomRoutes({Stack: RootStack, routes: routes[ENV]});
+
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={initialRouteName}>
+        <RootStack.Navigator initialRouteName={initialRouteName}>
           {renderDevMain()}
           {Screens}
-        </Stack.Navigator>
+        </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
   );
