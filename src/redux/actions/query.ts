@@ -12,13 +12,12 @@ const setPage = createAction<number>('query/setPage');
 
 const search = createAsyncThunk(
   'query/search',
-  async (q: string, thunkAPI) => {
-    thunkAPI.dispatch(set(q));
+  async (arg: undefined, thunkAPI) => {
     const state = thunkAPI.getState() as ReduxRootState;
-    const {page} = state.query;
+    const {page, value} = state.query;
     const {sort} = state.filter;
     const res = await newsApi.nyTimes.fetchArticles({
-      q,
+      q: value,
       begin_date: undefined,
       end_date: undefined,
       page,
@@ -27,7 +26,7 @@ const search = createAsyncThunk(
     });
     const mapped = newsApi.nyTimes.mapResponseToSearchResult(res);
     await thunkAPI.dispatch(searchRestulActions.push(mapped));
-    await thunkAPI.dispatch(recentQueryActions.push(q));
+    await thunkAPI.dispatch(recentQueryActions.push(value));
   }
 )
 
@@ -35,9 +34,9 @@ const fetchNextPage = createAsyncThunk(
   'query/fetchNextPage',
   async (args: undefined, thunkAPI) => {
     const state = thunkAPI.getState() as ReduxRootState;
-    const {page: prevPage, value: q} = state.query;
+    const {page: prevPage} = state.query;
     thunkAPI.dispatch(setPage(prevPage + 1));
-    await thunkAPI.dispatch(search(q))
+    await thunkAPI.dispatch(search())
   }
 )
 
