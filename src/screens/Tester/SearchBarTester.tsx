@@ -1,14 +1,20 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import SearchBar from '@components/SearchBar'
+import useReduxSearchResult from '@hooks/useReduxSearchResult'
+import React from 'react'
+import { View, Text } from 'react-native'
 
-export class SearchBarTester extends Component {
-  render() {
-    return (
-      <View>
-        <Text> textInComponent </Text>
-      </View>
-    )
-  }
+const SearchBarTester = () => {
+  const {methods, state} = useReduxSearchResult();
+  console.log(state);
+
+  return (
+    <View>
+      <SearchBar />
+      {state.result.map((item) => (
+        <Text>{item.headline}</Text>
+      ))}
+    </View>
+  )
 }
 
 export default SearchBarTester
