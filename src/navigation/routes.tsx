@@ -6,7 +6,7 @@ import DevRoute from '@navigation/routes/Development';
 import ProRoute from '@navigation/routes/Production';
 
 type ExtractParamListFromRoute<T extends {[index: string]: CustomRouteOption}> = {
-  [K in keyof T]: T[K]["params"] | undefined;
+  [K in keyof T]: T[K]["initialParams"];
 }
 
 export type RootStackParamList =
@@ -14,6 +14,6 @@ export type RootStackParamList =
   & ExtractParamListFromRoute<typeof ProRoute>;
 
 export default {
-  DEV,
+  DEV: {...DEV, ...PRODUCTION},
   PRODUCTION,
 }

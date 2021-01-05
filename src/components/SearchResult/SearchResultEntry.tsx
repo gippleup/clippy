@@ -1,4 +1,5 @@
 import { getComponentConstant } from '@api/constants';
+import { useNavigation } from '@react-navigation/native';
 import { SearchResult } from '@redux/schema/searchResult';
 import React from 'react'
 import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native'
@@ -17,8 +18,9 @@ const {
 const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
   const {item} = props;
   const {headline, abstract, clipped, id, pub_date, publisher, web_url, photo_url} = item;
+  const navigation = useNavigation();
   const onPress = () => {
-    
+    navigation.navigate("ArticleViewer", {url: web_url})
   }
   return (
     <View style={styles.container}>
