@@ -9,6 +9,7 @@ module.exports = {
         "@api": "./src/api",
         "@colortheme": "./src/colortheme",
         "@components": "./src/components",
+        "@hooks": "./src/hooks",
         "@redux": "./src/redux",
         "@router": "./src/router",
         "@screens": "./src/screens",

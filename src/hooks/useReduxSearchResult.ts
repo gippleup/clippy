@@ -1,20 +1,14 @@
 import { ReduxRootState } from "@redux/schema";
 import { useDispatch, useSelector } from "react-redux";
 import searchResultActions from '@redux/actions/searchResult';
-import { QueryStateStatus } from "@redux/reducers/query";
-import { ReduxHookMethod } from "./schema";
+import { mapActionsToHookMethod } from "@utils/redux";
 
 const selectSearchResult = (state: ReduxRootState) => state.searchResult;
 
 const useReduxSearchResult = () => {
   const searchResultState = useSelector(selectSearchResult);
   const dispatch = useDispatch();
-  const methods: ReduxHookMethod<typeof searchResultActions> = {
-    clip: (indicator) => dispatch(searchResultActions.clip(indicator)),
-    push: (searchResult) => dispatch(searchResultActions.push(searchResult)),
-    set: (searchResults) => dispatch(searchResultActions.set(searchResults)),
-    unclip: (indicator) => dispatch(searchResultActions.unclip(indicator)),
-  }
+  const methods = mapActionsToHookMethod(dispatch, searchResultActions);
   return {
     state: searchResultState,
     methods,
