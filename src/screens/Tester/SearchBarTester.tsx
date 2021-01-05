@@ -1,17 +1,19 @@
 import SearchBar from '@components/SearchBar'
+import useReduxBoot from '@hooks/useReduxBoot'
 import useReduxSearchResult from '@hooks/useReduxSearchResult'
 import React from 'react'
 import { View, Text } from 'react-native'
 
 const SearchBarTester = () => {
-  const {methods, state} = useReduxSearchResult();
-  console.log(state);
+  const {state, methods} = useReduxSearchResult();
+
+  useReduxBoot();
 
   return (
     <View>
       <SearchBar />
       {state.result.map((item) => (
-        <Text>{item.headline}</Text>
+        <Text key={item.id}>{item.headline}</Text>
       ))}
     </View>
   )
