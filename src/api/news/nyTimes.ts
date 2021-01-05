@@ -52,7 +52,7 @@ const mapResponseToSearchResult = (res: ArticleSearchResponse): SearchResult[] =
       abstract,
       pub_date,
       web_url,
-      headline: headline.name,
+      headline: headline.main,
       clipped: false,
       publisher: NYTIMES,
     })

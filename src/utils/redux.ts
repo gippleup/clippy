@@ -8,7 +8,7 @@ export type ReduxHookMethod<T extends Actions> = {
 
 export const mapActionsToHookMethod = <T extends Actions>(dispatch: ReturnType<typeof useDispatch>, actions: T): ReduxHookMethod<T> => {
   const appenedDispatch = Object.entries(actions).map(([key, func]) => {
-    const method = (...args) => dispatch(func(...args));
+    const method = (...args: Parameters<ActionCreator<any>>) => dispatch(func(...args));
     return [key, method] as const;
   });
   
