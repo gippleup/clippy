@@ -1,5 +1,4 @@
-import { ArticleIndicator, Clipped } from "@api/local/schema";
-import { SearchResult } from "@redux/schema/searchResult";
+import { Clipped, SearchResult } from "@redux/schema/searchResult";
 
 type ClippedIndicator = Pick<Clipped, "id" | "publisher">;
 

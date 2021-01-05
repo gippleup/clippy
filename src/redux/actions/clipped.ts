@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import localApi from "@api/local";
-import { ArticleIndicator, Clipped } from "@api/local/schema";
+import { Clipped, ArticleIndicator } from "@redux/schema/searchResult";
 
 const {clipped} = localApi;
 

@@ -1,8 +1,10 @@
 import Config from 'react-native-config'
 import { convertOptionToQuery } from '@utils/api';
 import { Article } from './nyTimes/schema';
+import util from './nyTimes/util'
 import { SearchResult } from '@redux/schema/searchResult';
-import { createSearchResult } from '@utils/searchResult';
+
+
 const {NYTIMES_API_KEY} = Config;
 const API_BASE = "https://api.nytimes.com/svc/";
 export const NYTIMES = "nyTimes";
@@ -29,38 +31,21 @@ export type ArticleSearchResponse = {
   },
 }
 
-const fetchArticles = async(option: ArticleSearchOption): Promise<ArticleSearchResponse> => {
+const fetchArticles = async(option: ArticleSearchOption): Promise<SearchResult[]> => {
   const {signal, ...queryOption} = option;
   const query = convertOptionToQuery(queryOption);
   const url = `${API_BASE}search/v2/articlesearch.json?${query}&api-key=${NYTIMES_API_KEY}`;
   try {
     const res = await fetch(url, {signal});
-    const json = res.json();
-    return json;
+    const json = await res.json() as ArticleSearchResponse;
+    const searchResults = util.mapResponseToSearchResult(json);
+    return searchResults;
   } catch (e) {
     throw e;
   }
 }
 
-const mapResponseToSearchResult = (res: ArticleSearchResponse): SearchResult[] => {
-  const {docs} = res.response;
-  const mapped = docs.map((article) => {
-    const {_id: id, abstract, headline, pub_date, web_url} = article;
-    return createSearchResult({
-      ...article,
-      id,
-      abstract,
-      pub_date,
-      web_url,
-      headline: headline.main,
-      clipped: false,
-      publisher: NYTIMES,
-    })
-  })
-  return mapped;
-}
-
 export default {
   fetchArticles,
-  mapResponseToSearchResult,
+  util,
 }

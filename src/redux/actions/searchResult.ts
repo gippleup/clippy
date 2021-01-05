@@ -1,10 +1,9 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { ArticleIndicator } from "@api/local/schema";
 import clippedActions from '@redux/actions/clipped';
 import { ReduxRootState } from "@redux/schema";
 import { getIndicatorIndex, isIndicated } from "@utils/searchResult";
 import { mapToArray } from "@utils/array";
-import { SearchResult } from "@redux/schema/searchResult";
+import { ArticleIndicator, SearchResult } from "@redux/schema/searchResult";
 
 const set = createAction<SearchResult[]>('searchResult/set');
 const push = createAsyncThunk(

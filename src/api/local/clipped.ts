@@ -1,7 +1,7 @@
+import { Clipped, ArticleIndicator } from "@redux/schema/searchResult";
 import { mapToArray } from "@utils/array";
 import { isIndicated, getIndicatorIndex } from "@utils/searchResult";
 import { getLocalData, setLocalData } from "@utils/storage";
-import { ArticleIndicator, Clipped } from "./schema";
 
 const LOCAL_STORAGE_KEY = "CLIPPED";
 const defaultValue: Clipped[] = [];
@@ -15,6 +15,7 @@ const dummy: Clipped = {
   web_url: "https://localZzirasi.com",
   pinned: false,
   tag: [],
+  photo_url: "",
 }
 const keys = Object.keys(dummy);
 

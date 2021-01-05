@@ -2,26 +2,26 @@ import { createReducer } from "@reduxjs/toolkit"
 import actions from '@redux/actions/recentQuery'
 
 type RecentQueryState = {
-  value: string[];
+  queries: string[];
 }
 
 const initialState: RecentQueryState = {
-  value: [],
+  queries: [],
 }
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.remove.fulfilled, (state, action) => {
-      state.value = action.payload;
+      state.queries = action.payload;
     })
     .addCase(actions.push.fulfilled, (state, action) => {
-      state.value = action.payload;
+      state.queries = action.payload;
     })
     .addCase(actions.clear.fulfilled, (state, action) => {
-      state.value = [];
+      state.queries = [];
     })
     .addCase(actions.get.fulfilled, (state, action) => {
-      state.value = action.payload;
+      state.queries = action.payload;
     })
 })
 

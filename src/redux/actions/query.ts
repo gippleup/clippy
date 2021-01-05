@@ -16,7 +16,7 @@ const search = createAsyncThunk(
     const state = thunkAPI.getState() as ReduxRootState;
     const {page, value} = state.query;
     const {sort} = state.filter;
-    const res = await newsApi.nyTimes.fetchArticles({
+    const searchResults = await newsApi.nyTimes.fetchArticles({
       q: value,
       begin_date: undefined,
       end_date: undefined,
@@ -24,8 +24,7 @@ const search = createAsyncThunk(
       signal: thunkAPI.signal,
       sort: sort,
     });
-    const mapped = newsApi.nyTimes.mapResponseToSearchResult(res);
-    await thunkAPI.dispatch(searchRestulActions.push(mapped));
+    await thunkAPI.dispatch(searchRestulActions.push(searchResults));
     await thunkAPI.dispatch(recentQueryActions.push(value));
   }
 )

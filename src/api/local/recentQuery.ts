@@ -8,9 +8,7 @@ const defaultValue: RecentQueryLocalStorage = {
 };
 
 const _validateData = <T>(data: any): T | null => {
-  const isValid = typeof data === "object"
-    && typeof data.count === "number"
-    && Array.isArray(data.queries);
+  const isValid = typeof data === "object" && data !== null && Array.isArray(data.queries);
   return isValid ? data as T : null;
 }
 
@@ -20,7 +18,6 @@ const _getValidData = async (): Promise<RecentQueryLocalStorage> => {
     ? JSON.parse(storedData)
     : storedData;
   const validatedData = _validateData<RecentQueryLocalStorage>(parsedData);
-
   if (validatedData === null) {
     await initialize();
     return _getValidData();
@@ -32,7 +29,7 @@ const _getValidData = async (): Promise<RecentQueryLocalStorage> => {
 const initialize = async() => setLocalData(LOCAL_STORAGE_KEY, defaultValue);
 
 const set = async(data: string[]) => {
-  await setLocalData<RecentQueryLocalStorage>(LOCAL_STORAGE_KEY, {
+  return setLocalData<RecentQueryLocalStorage>(LOCAL_STORAGE_KEY, {
     queries: data,
   });
 }
