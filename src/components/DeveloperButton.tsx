@@ -1,4 +1,5 @@
 import { NavigationProp } from '@react-navigation/native';
+import chroma from 'chroma-js';
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -27,6 +28,8 @@ const styles = StyleSheet.create({
     color: "#ff6464",
     fontSize: 20,
     fontWeight: "bold",
+    borderBottomColor: chroma("#543864").brighten().hex(),
+    borderBottomWidth: 0.5,
   }
 })
 
