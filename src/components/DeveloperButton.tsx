@@ -12,7 +12,6 @@ type DeveloperButtonProps = {
 
 const DeveloperButton: React.FC<DeveloperButtonProps> = (props) => {
   const {screenName, navigation, text, params} = props;
-  console.log(navigation.dangerouslyGetState());
   const onPress = () => navigation.navigate(screenName, params);
   return (
     <TouchableOpacity onPress={onPress}>
