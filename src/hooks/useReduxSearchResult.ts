@@ -6,7 +6,7 @@ import { ReduxHookMethod } from "./schema";
 
 const selectSearchResult = (state: ReduxRootState) => state.searchResult;
 
-const useQuery = () => {
+const useReduxSearchResult = () => {
   const searchResultState = useSelector(selectSearchResult);
   const dispatch = useDispatch();
   const methods: ReduxHookMethod<typeof searchResultActions> = {
@@ -21,4 +21,4 @@ const useQuery = () => {
   };
 }
 
-export default useQuery;
+export default useReduxSearchResult;

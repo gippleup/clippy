@@ -6,7 +6,7 @@ import { ReduxHookMethod } from "./schema";
 
 const selectFilter = (state: ReduxRootState) => state.filter;
 
-const useQuery = () => {
+const useReduxFilter = () => {
   const filterState = useSelector(selectFilter);
   const dispatch = useDispatch();
   const methods: ReduxHookMethod<typeof filterActions> = {
@@ -22,4 +22,4 @@ const useQuery = () => {
   };
 }
 
-export default useQuery;
+export default useReduxFilter;

@@ -6,7 +6,7 @@ import { ReduxHookMethod } from "./schema";
 
 const selectRecentQuery = (state: ReduxRootState) => state.recentQuery;
 
-const useQuery = () => {
+const useReduxRecentQuery = () => {
   const recentQeuryState = useSelector(selectRecentQuery);
   const dispatch = useDispatch();
   const methods: ReduxHookMethod<typeof recentQueryActions> = {
@@ -21,4 +21,4 @@ const useQuery = () => {
   };
 }
 
-export default useQuery;
+export default useReduxRecentQuery;
