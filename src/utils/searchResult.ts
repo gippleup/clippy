@@ -1,4 +1,5 @@
 import { ArticleIndicator, Clipped } from "@api/local/schema";
+import { SearchResult } from "@redux/schema/searchResult";
 
 type ClippedIndicator = Pick<Clipped, "id" | "publisher">;
 
@@ -14,3 +15,5 @@ export const isIndicated = (indicators: ClippedIndicator[], item: Clipped) => {
   const indicatorIndex = getIndicatorIndex(indicators, item);
   return indicatorIndex !== -1;
 }
+
+export const createSearchResult = (option: SearchResult) => option;

@@ -19,8 +19,8 @@ const push = createAsyncThunk(
 
 const remove = createAsyncThunk(
   'recentQuery/remove',
-  async (id: number, thunkAPI) => {
-    await recentQuery.remove(id);
+  async (query: string, thunkAPI) => {
+    await recentQuery.remove(query);
     return recentQuery.get();
   }
 )

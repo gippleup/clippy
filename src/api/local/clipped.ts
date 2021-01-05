@@ -11,7 +11,7 @@ const dummy: Clipped = {
   headline: "This is a headline",
   id: "123",
   pub_date: "20201010",
-  publisher: "nytimes",
+  publisher: "nyTimes",
   web_url: "https://localZzirasi.com",
   pinned: false,
   tag: [],

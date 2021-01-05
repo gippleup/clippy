@@ -1,10 +1,9 @@
 import { mapToArray } from "@utils/array";
 import { getLocalData, setLocalData } from "@utils/storage";
-import { RecentQuery, RecentQueryLocalStorage } from "./schema";
+import { RecentQueryLocalStorage } from "./schema";
 
 const LOCAL_STORAGE_KEY = "RECENT_QUERY";
 const defaultValue: RecentQueryLocalStorage = {
-  count: 0,
   queries: [],
 };
 
@@ -30,47 +29,30 @@ const _getValidData = async (): Promise<RecentQueryLocalStorage> => {
   return validatedData;
 }
 
-const _getCount = async(): Promise<number> => {
-  const validData = await _getValidData();
-  return validData.count;
-}
-
-const _mapQueryToItem = (query: string, id: number): RecentQuery => ({
-  id,
-  value: query,
-})
-
 const initialize = async() => setLocalData(LOCAL_STORAGE_KEY, defaultValue);
 
-const set = async(data: RecentQuery[]) => {
-  const id_max = data.reduce((acc, ele) => ele.id > acc ? ele.id : acc, 0);
+const set = async(data: string[]) => {
   await setLocalData<RecentQueryLocalStorage>(LOCAL_STORAGE_KEY, {
-    count: id_max,
     queries: data,
   });
 }
 
-const get = async(limit = 5): Promise<RecentQuery[]> => {
+const get = async(limit = 5): Promise<string[]> => {
   const validData = await _getValidData();
   return validData.queries.slice(0, limit);
 }
 
 const push = async(query: string | string[]) => {
-  const queries = mapToArray(query);
-  const lastId = await _getCount();
-  const newIdStart = lastId + 1;
+  const queries = mapToArray(query).filter((q) => q !== "");
   const validData = await _getValidData();
-  const items = Array.isArray(query)
-    ? query.map((q, i) => _mapQueryToItem(q, newIdStart + i))
-    : [_mapQueryToItem(query, newIdStart)];
-  const filtered = validData.queries.filter((q) => queries.indexOf(q.value) === -1);
-  const newItems = filtered.concat(items);
-  await set(newItems)
+  const filtered = validData.queries.filter((q) => queries.indexOf(q) === -1);
+  const updated = filtered.concat(query);
+  await set(updated)
 }
 
-const remove = async(id: number) => {
+const remove = async(query: string) => {
   const validData = await _getValidData();
-  const removed = validData.queries.filter((item) => item.id !== id);
+  const removed = validData.queries.filter((q) => q !== query);
   set(removed);
 }
 

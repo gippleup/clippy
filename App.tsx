@@ -10,6 +10,7 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator,  } from '@react-navigation/stack';
+import { Provider } from 'react-redux'
 import React from 'react';
 import DevRoutes from '@router/Development';
 import Developer from '@screens/Developer.tsx';
@@ -17,6 +18,7 @@ import ProRoutes from '@router/Production';
 import Config from 'react-native-config';
 import { renderCustomRoutes } from '@utils/router';
 import 'react-native-gesture-handler';
+import store from '@redux/store';
 
 const {ENV = "DEV"} = Config;
 declare const global: {HermesInternal: null | {}};
@@ -44,12 +46,14 @@ const Screens = ENV === "DEV" ? DevScreens : ProductonScreens;
 const initialRouteName = ENV === "DEV" ? "Developer" : "Main";
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRouteName}>
-        {renderDevMain()}
-        {Screens}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={initialRouteName}>
+          {renderDevMain()}
+          {Screens}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

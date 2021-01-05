@@ -1,13 +1,7 @@
 import { RegisteredPublisher } from "@redux/schema/publishers"
 
-export type RecentQuery = {
-  id: number;
-  value: string;
-}
-
 export type RecentQueryLocalStorage = {
-  count: number,
-  queries: RecentQuery[];
+  queries: string[];
 }
 
 export type ShortenedArticle = {
