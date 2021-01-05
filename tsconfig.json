@@ -45,6 +45,7 @@
       "@redux/*": ["./src/redux/*"],
       "@router/*": ["./src/router/*"],
       "@screens/*": ["./src/screens/*"],
+      "@styled/*": ["./src/styled/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"],
     },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */

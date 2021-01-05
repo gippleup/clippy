@@ -13,6 +13,7 @@ module.exports = {
         "@redux": "./src/redux",
         "@router": "./src/router",
         "@screens": "./src/screens",
+        "@styled": "./src/styled",
         "@types": "./src/types",
         "@utils": "./src/utils",
       }

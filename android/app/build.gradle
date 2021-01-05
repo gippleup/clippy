@@ -82,7 +82,8 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // react-native-config
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle" // react-native-vector-icons
 
 /**
  * Set this to true to create two separate APKs instead of one:
