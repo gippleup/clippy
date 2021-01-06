@@ -7,6 +7,9 @@ const routes = {
     devName: "메인",
     component: Main,
     initialParams: {},
+    options: {
+      headerShown: false,
+    }
   }),
   ArticleViewer: defineCustomRoute<ArticleViewerParams>({
     devName: "아티클 뷰어",

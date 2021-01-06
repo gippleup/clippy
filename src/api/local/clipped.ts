@@ -56,7 +56,7 @@ const initialize = async() => setLocalData(LOCAL_STORAGE_KEY, defaultValue);
 
 const set = async(data: Clipped[]) => setLocalData(LOCAL_STORAGE_KEY, data);
 
-const get = async() => await _getValidData();
+const get = _getValidData;
 
 const push = async(item: Clipped | Clipped[]) => {
   const items = mapToArray(item);

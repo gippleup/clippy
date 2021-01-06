@@ -1,4 +1,4 @@
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@api/constants/dimension'
+import { SCREEN_WIDTH } from '@api/constants/generic'
 import { RootStackParamList } from '@navigation/routes'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'

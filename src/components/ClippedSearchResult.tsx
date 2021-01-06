@@ -4,7 +4,7 @@ import useReduxQuery from '@hooks/useReduxQuery';
 import { useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
 import React from 'react'
-import ClippedResultList from './ClippedSearchResult/ClippedResultList';
+import SearchResultList from './SearchResult/SearchResultList';
 
 const ClippedSearchResult = () => {
   const {methods: ClippedMethods, state: ClippedState} = useReduxClipped();
@@ -25,8 +25,8 @@ const ClippedSearchResult = () => {
   useReduxBoot();
 
   return (
-    <ClippedResultList
-      clippedResults={ClippedState.articles}
+    <SearchResultList
+      searchResults={ClippedState.articles}
       onEndReached={onEndReached}
       onEndReachedThreshold={1}
       onPressEntry={onPressEntry}
