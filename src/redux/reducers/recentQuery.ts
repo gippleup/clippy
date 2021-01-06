@@ -3,10 +3,12 @@ import actions from '@redux/actions/recentQuery'
 
 type RecentQueryState = {
   queries: string[];
+  visible: boolean;
 }
 
 const initialState: RecentQueryState = {
   queries: [],
+  visible: false,
 }
 
 const reducer = createReducer(initialState, (builder) => {
@@ -22,6 +24,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.get.fulfilled, (state, action) => {
       state.queries = action.payload;
+    })
+    .addCase(actions.setVisiblity, (state, action) => {
+      state.visible = action.payload;
     })
 })
 

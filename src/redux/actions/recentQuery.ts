@@ -1,7 +1,9 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import localApi from "@api/local";
 
 const {recentQuery} = localApi;
+const setVisiblity = createAction<boolean>('recentQeury/setVisibility');
+
 const get = createAsyncThunk(
   'recentQuery/get',
   async () => {
@@ -35,6 +37,7 @@ const clear = createAsyncThunk(
 )
 
 export default {
+  setVisiblity,
   get,
   push,
   remove,

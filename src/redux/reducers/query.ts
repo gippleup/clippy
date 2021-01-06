@@ -7,17 +7,20 @@ type QueryState = {
   value: string;
   page: number;
   status: QueryStateStatus;
+  prevValue: string,
 }
 
 const initialState: QueryState = {
   value: "",
   page: 0,
   status: "idle",
+  prevValue: "",
 };
 
 const queryReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.search.fulfilled, (state, action) => {
+      state.prevValue = state.value;
       state.status = "idle";
     })
     .addCase(actions.search.rejected, (state, action) => {
