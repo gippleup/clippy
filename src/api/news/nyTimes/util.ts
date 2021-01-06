@@ -1,4 +1,4 @@
-import { SCREEN_WIDTH } from "@api/constants";
+import { SCREEN_WIDTH } from "@api/constants/dimension";
 import { SearchResult } from "@redux/schema/searchResult";
 import { createSearchResult } from "@utils/searchResult";
 import { ArticleSearchResponse, NYTIMES } from "../nyTimes";
