@@ -1,28 +1,29 @@
 import { getComponentConstant, getScreenConstant } from '@api/constants';
 import useReduxQuery from '@hooks/useReduxQuery';
 import useReduxRecentQuery from '@hooks/useReduxRecentQuery'
+import { ReduxRootState } from '@redux/schema';
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import RecentQueryEntry from './RecentQueryEntry';
 
-const RecentQueryList = () => {
-  const {state, methods} = useReduxRecentQuery();
-  const {methods: queryMethods} = useReduxQuery();
-  const {queries} = state;
+type RecentQueryListProps = {
+  onPressEntry: (q: string) => any;
+  onPressDelete: (q: string) => any;
+  state: ReduxRootState["recentQuery"];
+}
+
+const RecentQueryList: React.FC<RecentQueryListProps> = (props) => {
+  const {onPressDelete, onPressEntry, state} = props;
+  const {queries, visible} = state;
   return (
-    <View style={styles.columnReverse}>
+    <View style={[styles.columnReverse, {opacity: visible ? 1 : 0}]}>
       {queries.map((q) => {
-        const removeQuery = () => methods.remove(q);
-        const setToQuery = async () => {
-          queryMethods.set(q);
-          queryMethods.search();
-        }
         return (
           <RecentQueryEntry
             key={q}
             text={q}
-            onPressEntry={setToQuery}
-            onPressDelete={removeQuery}
+            onPressEntry={onPressEntry}
+            onPressDelete={onPressDelete}
           />
         )
       })}

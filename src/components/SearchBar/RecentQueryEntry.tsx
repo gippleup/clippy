@@ -1,18 +1,19 @@
-import { getScreenConstant } from '@api/constants';
+import { getComponentConstant, getScreenConstant } from '@api/constants';
 import { getIcon } from '@api/icons';
 import { FlexHorizontal } from '@styled/FlexHorizontal';
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 type RecentQueryEntryProps = {
   text: string;
-  onPressEntry: () => any;
-  onPressDelete: () => any;
+  onPressEntry: (q: string) => any;
+  onPressDelete: (q: string) => any;
 }
 
 const RecentQueryEntry = (props: RecentQueryEntryProps) => {
-  const {text, onPressDelete, onPressEntry} = props;
+  const {text} = props;
+  const onPressEntry = () => props.onPressEntry(text);
+  const onPressDelete = () => props.onPressDelete(text);
   return (
     <TouchableOpacity onPress={onPressEntry}>
       <FlexHorizontal style={styles.container}>
