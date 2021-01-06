@@ -3,6 +3,7 @@ import SearchBarTester from '@screens/Tester/SearchBarTester';
 import LocalStorageTester from '@screens/Tester/LocalStorageTester';
 import RecentQueryApiTester from '@screens/Tester/RecentQueryApiTester';
 import SearchResultListTester from '@screens/Tester/SearchResultListTester';
+import SearchArticleTester from '@screens/Tester/SearchArticleTester';
 
 const routes = {
   SearchBarTester: defineCustomRoute({
@@ -23,6 +24,11 @@ const routes = {
   SearchResultListTester: defineCustomRoute({
     devName: "검색 결과 목록 테스터",
     component: SearchResultListTester,
+    initialParams: {},
+  }),
+  SearchArticleTester: defineCustomRoute({
+    devName: "검색 화면 테스터",
+    component: SearchArticleTester,
     initialParams: {},
   }),
 }
