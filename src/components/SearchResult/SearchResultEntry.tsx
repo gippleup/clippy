@@ -88,5 +88,7 @@ const styles = StyleSheet.create({
 export default React.memo(SearchResultEntry, (prev, next) => isAllTrue([
   prev.item.id === next.item.id,
   prev.item.publisher === next.item.publisher,
+  prev.item.clipStatus === next.item.clipStatus,
+  prev.item.clipped === next.item.clipped,
   prev.theme === next.theme,
 ]));
