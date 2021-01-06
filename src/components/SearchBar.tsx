@@ -39,7 +39,7 @@ const SearchBar = () => {
   return (
     <View style={styles.alignCenter}>
       <View style={styles.alignLeft}>
-        <FlexHorizontal style={styles.barContainer}>
+        <FlexHorizontal onLayout={(e) => console.log(e.nativeEvent.layout.height)} style={styles.barContainer}>
           <TextInput
             value={value}
             style={styles.textInput}
