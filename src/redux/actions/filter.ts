@@ -4,7 +4,6 @@ import { ReduxRootState } from "@redux/schema";
 import { RegisteredPublisher } from "@redux/schema/publishers";
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { mapToArray } from "@utils/array";
-import { isIndicated } from "@utils/searchResult";
 
 const setSort = createAction<ArticleSearchOption["sort"]>('filter/setSort')
 

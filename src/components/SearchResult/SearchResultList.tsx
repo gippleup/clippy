@@ -1,3 +1,4 @@
+import { SupportedColorTheme } from '@api/colortheme';
 import { getComponentConstant } from '@api/constants';
 import { ArticleIndicator, SearchResult } from '@redux/schema/searchResult'
 import React from 'react'
@@ -11,6 +12,7 @@ type SearchResultListProps = {
   searchResults: SearchResult[];
   onPressEntry: (url: string) => any;
   onPressClip: (indicator: ArticleIndicator) => any;
+  theme?: SupportedColorTheme;
 } & Pick<FlatListProps<{}>, PropFromFlatList>
 
 const getItemLayout: FlatListProps<{}>["getItemLayout"] = (data, index: number) => ({
@@ -26,6 +28,7 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
     onPressEntry,
     onPressClip,
     onEndReachedThreshold,
+    theme="light",
   } = props;
 
   const renderItem = (info: ListRenderItemInfo<SearchResult>) => (
@@ -33,6 +36,7 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
       onPress={onPressEntry}
       onPressClip={onPressClip}
       item={info.item}
+      theme={theme}
     />
   )
 

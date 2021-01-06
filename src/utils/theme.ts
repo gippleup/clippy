@@ -19,11 +19,11 @@ type ThemedComponentDefinition<C extends React.ComponentClass | React.FC> = {
   themeStyle?: Partial<ComponentThemeDefinition>;
 }
 
-const pickRelevantThemeStyle = (themeName: SupportedColorTheme, themeStyle?: Partial<ComponentThemeDefinition>) => {
+const pickRelevantThemeStyle = (theme: SupportedColorTheme, themeStyle?: Partial<ComponentThemeDefinition>) => {
   if (themeStyle === undefined) return null;
-  const specifiedStyleMapper = themeStyle[themeName]
+  const specifiedStyleMapper = themeStyle[theme]
   if (specifiedStyleMapper === undefined) return null;
-  return specifiedStyleMapper(colors[themeName])
+  return specifiedStyleMapper(colors[theme])
 }
 
 

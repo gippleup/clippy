@@ -12,8 +12,8 @@ type RecentQueryEntryProps = {
 
 const RecentQueryEntry = (props: RecentQueryEntryProps) => {
   const {text} = props;
-  const onPressEntry = () => props.onPressEntry(text);
-  const onPressDelete = () => props.onPressDelete(text);
+  const onPressDelete = props.onPressDelete.bind(null, text);
+  const onPressEntry = props.onPressEntry.bind(null, text);
   return (
     <TouchableOpacity onPress={onPressEntry}>
       <FlexHorizontal style={styles.container}>

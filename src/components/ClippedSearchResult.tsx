@@ -19,7 +19,7 @@ const ClippedSearchResult = () => {
   }
 
   const onPressClip = (indicator: ArticleIndicator) => {
-    ClippedMethods.unclip(indicator);
+    ClippedMethods.crossUnclip(indicator);
   }
 
   useReduxBoot();
