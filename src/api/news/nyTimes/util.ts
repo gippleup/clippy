@@ -1,8 +1,7 @@
 import { SCREEN_WIDTH } from "@api/constants/generic";
 import { SearchResult } from "@redux/schema/searchResult";
 import { createSearchResult } from "@utils/searchResult";
-import { ArticleSearchResponse, NYTIMES } from "../nyTimes";
-import { Multimedia } from "./schema";
+import { ArticleSearchResponse, Multimedia, NYTIMES } from "./schema";
 
 const defaultImageUrl = "https://images-na.ssl-images-amazon.com/images/I/31B-jyc2D5L.jpg"
 
@@ -28,6 +27,7 @@ const mapResponseToSearchResult = (res: ArticleSearchResponse): SearchResult[] =
       clipped: false,
       publisher: NYTIMES,
       photo_url: mapMultimediaToUrl(multimedia),
+      clipStatus: "idle",
     })
   })
   return mapped;

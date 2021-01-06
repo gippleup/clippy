@@ -1,13 +1,12 @@
 import Config from 'react-native-config'
 import { convertOptionToQuery } from '@utils/api';
-import { Article } from './nyTimes/schema';
+import { ArticleSearchResponse } from './nyTimes/schema';
 import util from './nyTimes/util'
 import { SearchResult } from '@redux/schema/searchResult';
 
 
 const {NYTIMES_API_KEY} = Config;
 const API_BASE = "https://api.nytimes.com/svc/";
-export const NYTIMES = "nyTimes";
 
 export type ArticleSearchOption = {
   q?: string;
@@ -16,19 +15,6 @@ export type ArticleSearchOption = {
   begin_date?: string;
   end_date?: string;
   signal?: AbortSignal;
-}
-
-export type ArticleSearchResponse = {
-  status: string;
-  copyright: string;
-  response: {
-    docs: Article[];
-    meta: {
-      hits: number;
-      offset: number;
-      time: number;
-    }
-  },
 }
 
 const fetchArticles = async(option: ArticleSearchOption): Promise<SearchResult[]> => {

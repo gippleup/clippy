@@ -68,3 +68,18 @@ export type Article = {
   score: number;
   url: string;
 }
+
+export type ArticleSearchResponse = {
+  status: string;
+  copyright: string;
+  response: {
+    docs: Article[];
+    meta: {
+      hits: number;
+      offset: number;
+      time: number;
+    }
+  },
+}
+
+export const NYTIMES = "nyTimes";

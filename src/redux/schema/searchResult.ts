@@ -1,10 +1,6 @@
 import { RegisteredPublisher } from "./publishers";
 
-export type SearchResult = ShortenedArticle & {
-  clipped: boolean;
-}
-
-export type ShortenedArticle = {
+export interface ShortenedArticle {
   publisher: RegisteredPublisher;
   id: string;
   pub_date: string;
@@ -14,7 +10,12 @@ export type ShortenedArticle = {
   photo_url: string;
 }
 
-export type Clipped = SearchResult & {
+export interface SearchResult extends ShortenedArticle {
+  clipped: boolean;
+  clipStatus: "pending" | "idle";
+}
+
+export interface Clipped extends SearchResult {
   pinned: boolean;
   tag: string[];
 }

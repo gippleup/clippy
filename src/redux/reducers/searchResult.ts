@@ -12,6 +12,9 @@ const initialState: SearchResultState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.setClipStatus.fulfilled, (state, action) => {
+      state.result = action.payload.result;
+    })
     .addCase(actions.set, (state, action) => {
       state.result = action.payload;
     })
@@ -21,7 +24,10 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(actions.clip.fulfilled, (state, action) => {
       state.result = action.payload.result;
     })
-    .addCase(actions.unclip.fulfilled, (state, action) => {
+    .addCase(actions.pureUnclip.fulfilled, (state, action) => {
+      state.result = action.payload.result;
+    })
+    .addCase(actions.crossUnclip.fulfilled, (state, action) => {
       state.result = action.payload.result;
     })
 })

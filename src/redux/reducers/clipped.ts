@@ -18,6 +18,9 @@ const reducer = createReducer(initialState, (builder) => {
     // .addCase(actions.removeTag.fulfilled, (state, action) => {
     //   state.articles = action.payload;
     // })
+    .addCase(actions.setClipStatus.fulfilled, (state, action) => {
+      state.articles = action.payload;
+    })
     .addCase(actions.clearTags.fulfilled, (state, action) => {
       state.articles = action.payload;
     })
@@ -39,7 +42,10 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(actions.set.fulfilled, (state, action) => {
       state.articles = action.payload;
     })
-    .addCase(actions.unclip.fulfilled, (state, action) => {
+    .addCase(actions.crossUnclip.fulfilled, (state, action) => {
+      state.articles = action.payload;
+    })
+    .addCase(actions.pureUnclip.fulfilled, (state, action) => {
       state.articles = action.payload;
     })
     .addCase(actions.unpin.fulfilled, (state, action) => {

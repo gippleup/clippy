@@ -1,8 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AsyncThunkPayloadCreator, createAsyncThunk } from "@reduxjs/toolkit";
 import localApi from "@api/local";
-import { Clipped, ArticleIndicator } from "@redux/schema/searchResult";
+import { Clipped, ArticleIndicator, SearchResult } from "@redux/schema/searchResult";
 import { ReduxRootState } from "@redux/schema";
 import { isIndicated } from "@utils/searchResult";
+import { mapToArray } from "@utils/array";
+import searchResult from "./searchResult";
 
 const {clipped} = localApi;
 
@@ -27,7 +29,8 @@ const remove = createAsyncThunk(
 const push = createAsyncThunk(
   'clipped/push',
   async (item: Clipped | Clipped[]) => {
-    await clipped.push(item);
+    const mapped: Clipped[] = mapToArray(item).map((item) => ({...item, clipStatus: "idle"}));
+    await clipped.push(mapped);
     const updated = await clipped.get();
     return updated;
   }
@@ -59,14 +62,27 @@ const clearTags = createAsyncThunk(
   }
 );
 
-const unclip = createAsyncThunk(
-  'clipped/unclip',
-  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
-    await clipped.remove(indicator);
-    const updated = await clipped.get();
-    return updated;
+type UnclipAsyncThunkPayloadCreator = AsyncThunkPayloadCreator<
+  Clipped[], ArticleIndicator | ArticleIndicator[], {}
+>;
+
+const baseUnclipLogic: UnclipAsyncThunkPayloadCreator = async (indicator, thunkAPI) => {
+  await thunkAPI.dispatch(setClipStatus({indicator, status: "pending"}));
+  await thunkAPI.dispatch(remove(indicator));
+  const updated = await clipped.get();
+  await thunkAPI.dispatch(setClipStatus({indicator, status: "idle"}));
+  return updated;
+}
+
+const pureUnclip = createAsyncThunk('clipped/pureUnclip', baseUnclipLogic);
+const crossUnclip = createAsyncThunk(
+  'clipped/crossUnclip',
+  async (indicator: ArticleIndicator | ArticleIndicator[], thunkAPI) => {
+    await thunkAPI.dispatch(searchResult.pureUnclip(indicator))
+    return baseUnclipLogic(indicator, thunkAPI);
   }
 );
+
 
 // TODO: tag should be handled on seperate reducer. create reducer for handling tag input first.
 // const addTag = createAsyncThunk(
@@ -116,11 +132,30 @@ const togglePin = createAsyncThunk(
   }
 )
 
+const setClipStatus = createAsyncThunk(
+  'clipped/setClipStatus',
+  async(args: {
+    indicator: ArticleIndicator | ArticleIndicator[],
+    status: SearchResult["clipStatus"],
+  }, thunkAPI) => {
+    const state = thunkAPI.getState() as ReduxRootState;
+    const {indicator, status} = args;
+    const mapped = state.clipped.articles.map((item) => {
+      if (!isIndicated(indicator, item)) return item;
+      return {
+        ...item,
+        clipStatus: status,
+      }
+    });
+    return mapped;
+  }
+)
+
 export default {
   set,
   remove,
   initialize,
-  unclip,
+  crossUnclip,
   // addTag,
   // removeTag,
   pin,
@@ -129,4 +164,6 @@ export default {
   get,
   clearTags,
   togglePin,
+  setClipStatus,
+  pureUnclip,
 }
