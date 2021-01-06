@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     padding: 5,
-    width: getScreenConstant("main").SEARCH_INPUT_WIDTH,
+    width: getComponentConstant("searchBar").SEARCH_INPUT_WIDTH,
+    justifyContent: "space-between"
   },
   iconContainer: {
     backgroundColor: "black",

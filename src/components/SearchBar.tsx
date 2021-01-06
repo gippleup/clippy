@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: getScreenConstant("main").SEARCH_INPUT_WIDTH,
-    backgroundColor: "lightgrey",
+    width: SEARCH_INPUT_WIDTH,
     borderRadius: 5,
     borderWidth: 0.5,
     borderColor: "black",

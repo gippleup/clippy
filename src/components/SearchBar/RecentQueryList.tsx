@@ -1,4 +1,4 @@
-import { getScreenConstant } from '@api/constants';
+import { getComponentConstant, getScreenConstant } from '@api/constants';
 import useReduxQuery from '@hooks/useReduxQuery';
 import useReduxRecentQuery from '@hooks/useReduxRecentQuery'
 import React from 'react'
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: "column-reverse",
     position: "absolute",
     zIndex: 1,
-    paddingLeft: getScreenConstant("main").SEARCHBAR_PADDING,
-  }
+    paddingLeft: getComponentConstant("searchBar").SEARCHBAR_PADDING,
+  },
 })
 
 export default RecentQueryList

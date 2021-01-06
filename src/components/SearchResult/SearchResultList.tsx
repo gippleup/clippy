@@ -3,6 +3,9 @@ import React from 'react'
 import { View, Text, FlatList, FlatListProps, ListRenderItemInfo } from 'react-native'
 import SearchResultEntry from './SearchResultEntry'
 
+const {SEARCH_RESULT_HEIGHT, SEARCH_RESULT_MARGIN_BOTTOM, SEARCH_RESULT_WIDTH} = getComponentConstant("searchResult");
+type PropFromFlatList = "onEndReached" | "onEndReachedThreshold";
+
 type SearchResultListProps = {
   searchResults: SearchResult[];
 }

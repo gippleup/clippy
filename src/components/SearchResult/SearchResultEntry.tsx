@@ -13,6 +13,7 @@ type SearchResultEntryProps = {
 const {
   SEARCH_RESULT_HEIGHT,
   SEARCH_RESULT_WIDTH,
+  SEARCH_RESULT_MARGIN_BOTTOM,
 } = getComponentConstant("searchResult")
 
 const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {

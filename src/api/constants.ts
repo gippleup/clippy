@@ -1,31 +1,16 @@
-import { Dimensions } from "react-native";
-
-const {width, height} = Dimensions.get("screen");
-export const SCREEN_WIDTH = width;
-export const SCREEN_HEIGHT = height;
-
-const SEARCH_INPUT_WIDTH = SCREEN_WIDTH - 100;
-const SEARCHBAR_PADDING = 5;
-
-const SEARCH_RESULT_WIDTH = Math.min(SCREEN_WIDTH - 20, 720);
-const SEARCH_RESULT_HEIGHT = SEARCH_RESULT_WIDTH * (9 / 16);
+import * as searchBar from './constants/component/searchBar'
+import * as searchResult from './constants/component/searhResult'
+import * as searchArticle from './constants/screen/searchArticle'
+import * as clipButton from './constants/component/clipButton'
 
 const CONSTANTS = {
   component: {
-    searchResult: {
-      SEARCH_RESULT_WIDTH,
-      SEARCH_RESULT_HEIGHT,
-    },
-    searchBar: {
-      SEARCH_INPUT_WIDTH,
-      SEARCHBAR_PADDING,
-    }
+    searchResult,
+    searchBar,
+    clipButton,
   },
   screen: {
-    main: {
-      SEARCH_INPUT_WIDTH,
-      SEARCHBAR_PADDING,
-    }
+    searchArticle,
   }
 } as const;
 
