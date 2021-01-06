@@ -10,7 +10,7 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationOptions,  } from '@react-navigation/stack';
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import React from 'react';
 import Developer from '@screens/Developer.tsx';
 import Config from 'react-native-config';
@@ -18,7 +18,10 @@ import { renderCustomRoutes } from '@utils/navigation';
 import routes from '@navigation/routes';
 import 'react-native-gesture-handler';
 import store from '@redux/store';
+import {enableScreens} from 'react-native-screens'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+enableScreens();
 declare const global: {HermesInternal: null | {}};
 const {ENV = "DEV"} = Config;
 
@@ -44,14 +47,16 @@ const renderDevMain = () => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <RootStack.Navigator mode="modal" initialRouteName={initialRouteName}>
-          {renderDevMain()}
-          {Screens}
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <ReduxProvider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <RootStack.Navigator mode="modal" initialRouteName={initialRouteName}>
+            {renderDevMain()}
+            {Screens}
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ReduxProvider>
   );
 };
 
