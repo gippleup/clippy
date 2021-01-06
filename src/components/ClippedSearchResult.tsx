@@ -1,3 +1,4 @@
+import useReduxBoot from '@hooks/useReduxBoot';
 import useReduxClipped from '@hooks/useReduxClipped';
 import useReduxQuery from '@hooks/useReduxQuery';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +21,8 @@ const ClippedSearchResult = () => {
   const onPressClip = (indicator: ArticleIndicator) => {
     ClippedMethods.unclip(indicator);
   }
+
+  useReduxBoot();
 
   return (
     <ClippedResultList

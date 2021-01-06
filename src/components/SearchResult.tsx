@@ -1,3 +1,4 @@
+import useReduxBoot from '@hooks/useReduxBoot';
 import useReduxQuery from '@hooks/useReduxQuery';
 import useReduxSearchResult from '@hooks/useReduxSearchResult'
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +21,8 @@ const SearchResult = () => {
   const onPressClip = (indicator: ArticleIndicator) => {
     SearchResultMethods.toggleClip(indicator);
   }
+
+  useReduxBoot();
 
   return (
     <SearchResultList
