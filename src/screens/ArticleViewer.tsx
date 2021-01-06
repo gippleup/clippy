@@ -27,17 +27,33 @@ export class ArticleViewer extends Component<ArticleViewerProps> {
     const {route} = this.props;
     const {url} = route.params;
     return (
-      <WebView
-        containerStyle={styles.webContainer}
-        source={{uri: url}}
-      />
+      <View style={styles.container}>
+        <View style={styles.taylor}>
+          <WebView
+            containerStyle={styles.webContainer}
+            source={{uri: url}}
+          />
+        </View>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  taylor: {
+    marginVertical: 10,
+    borderRadius: 10,
+    overflow: "hidden"
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
   webContainer: {
-    width: SCREEN_WIDTH,
+    width: SCREEN_WIDTH - 20,
   }
 })
 
