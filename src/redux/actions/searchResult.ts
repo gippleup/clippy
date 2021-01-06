@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import clippedActions from '@redux/actions/clipped';
 import { ReduxRootState } from "@redux/schema";
-import { getIndicatorIndex, isIndicated } from "@utils/searchResult";
+import { converToClipped, getIndicatorIndex, isIndicated } from "@utils/searchResult";
 import { mapToArray } from "@utils/array";
 import { ArticleIndicator, SearchResult } from "@redux/schema/searchResult";
 
@@ -53,9 +53,21 @@ const clip = createAsyncThunk(
   }
 )
 
+const toggleClip = createAsyncThunk(
+  'searchResult/toggleClip',
+  async (indicator: ArticleIndicator, thunkAPI) => {
+    const state = thunkAPI.getState() as ReduxRootState;
+    const toggleTarget = state.searchResult.result.find((item) => isIndicated([indicator], item));
+    if (toggleTarget === undefined) return;
+    const relavantAction = toggleTarget.clipped ? unclip(indicator) : clip(indicator);
+    await thunkAPI.dispatch(relavantAction);
+  }
+)
+
 export default {
   set,
   push,
   clip,
   unclip,
+  toggleClip,
 }
