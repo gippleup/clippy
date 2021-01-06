@@ -1,10 +1,27 @@
-import getColorTheme from "@api/colortheme";
-import ColorTheme from "@api/colortheme/schema";
 import { createReducer } from "@reduxjs/toolkit";
+import actions from '@redux/actions/theme';
+import { SupportedColorTheme } from "@api/colortheme";
 
-const initialState: ColorTheme = getColorTheme("dark");
+type ThemeState = {
+  name: SupportedColorTheme;
+}
+
+const initialState: ThemeState = {
+  name: "light",
+}
+
 const reducer = createReducer(initialState, (builder) => {
-  builder.addDefaultCase((state, action) => state)
+  builder
+    .addCase(actions.get.fulfilled, (state, action) => {
+      state.name = action.payload;
+    })
+    .addCase(actions.set.fulfilled, (state, action) => {
+      state.name = action.payload;
+    })
+    .addCase(actions.initialize.fulfilled, (state, action) => {
+      state.name = action.payload;
+    })
+    .addDefaultCase((state, action) => state)
 });
 
 export default reducer;

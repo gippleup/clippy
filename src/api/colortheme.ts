@@ -1,9 +1,13 @@
 import dark from './colortheme/dark'
+import light from './colortheme/light'
 
 const ColorPack = {
   dark,
+  light,
 }
 
-const getColorTheme = (theme: keyof typeof ColorPack) => ColorPack[theme];
+export const ColorThems = Object.keys(ColorPack);
+export type SupportedColorTheme = keyof typeof ColorPack;
 
-export default getColorTheme
+export const getColorTheme = (theme: keyof typeof ColorPack) => ColorPack[theme];
+export const getAllColors = () => ColorPack;

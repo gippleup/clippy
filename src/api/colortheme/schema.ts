@@ -1,9 +1,9 @@
 type ColorTheme = {
   primary: string;
   secondary: string;
-  surface?: string;
-  background?: string;
-  error?: string;
+  surface: string;
+  background: string;
+  error: string;
 }
 
 const defaultSurfaceColor = "white";
@@ -15,6 +15,7 @@ const defaultValues = {
   error: defaultErrorColor,
 }
 
-export const createColorTheme = (option: ColorTheme) => ({...defaultValues, ...option})
+type CreateColorThemeOption = Pick<ColorTheme, "primary" | "secondary"> & Partial<ColorTheme>;
+export const createColorTheme = (option: CreateColorThemeOption): ColorTheme => ({...defaultValues, ...option})
 
 export default ColorTheme;
