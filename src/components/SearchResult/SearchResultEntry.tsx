@@ -85,10 +85,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default React.memo(SearchResultEntry, (prev, next) => {
-  return isAllTrue([
-    prev.item.id === next.item.id,
-    prev.item.publisher === next.item.publisher,
-    prev.theme === next.theme,
-  ])
-});
+export default React.memo(SearchResultEntry, (prev, next) => isAllTrue([
+  prev.item.id === next.item.id,
+  prev.item.publisher === next.item.publisher,
+  prev.theme === next.theme,
+]));

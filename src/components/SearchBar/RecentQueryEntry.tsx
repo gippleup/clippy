@@ -1,6 +1,7 @@
 import { getComponentConstant, getScreenConstant } from '@api/constants';
 import { getIcon } from '@api/icons';
 import { FlexHorizontal } from '@styled/FlexHorizontal';
+import { isAllTrue } from '@utils/condition';
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
@@ -49,4 +50,6 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RecentQueryEntry
+export default React.memo(RecentQueryEntry, (prev, next) => isAllTrue([
+  prev.text === next.text,
+]))

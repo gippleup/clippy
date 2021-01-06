@@ -52,9 +52,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default React.memo(ClipButton, (prev, next) => {
-  return isAllTrue([
-    prev.clipStatus === next.clipStatus,
-    prev.clipped === next.clipped,
-  ]);;
-});
+export default React.memo(ClipButton, (prev, next) => isAllTrue([
+  prev.clipStatus === next.clipStatus,
+  prev.clipped === next.clipped,
+]));
