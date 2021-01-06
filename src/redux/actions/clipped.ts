@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import localApi from "@api/local";
 import { Clipped, ArticleIndicator } from "@redux/schema/searchResult";
+import { ReduxRootState } from "@redux/schema";
+import { isIndicated } from "@utils/searchResult";
 
 const {clipped} = localApi;
 
@@ -43,7 +45,6 @@ const initialize = createAsyncThunk(
 const get = createAsyncThunk(
   'clipped/get',
   async () => {
-    await clipped.get();
     const updated = await clipped.get();
     return updated;
   }
@@ -67,23 +68,24 @@ const unclip = createAsyncThunk(
   }
 );
 
-const addTag = createAsyncThunk(
-  'clipped/addTag',
-  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
-    await clipped.addTag(indicator);
-    const updated = await clipped.get();
-    return updated;
-  }
-);
+// TODO: tag should be handled on seperate reducer. create reducer for handling tag input first.
+// const addTag = createAsyncThunk(
+//   'clipped/addTag',
+//   async (indicator: ArticleIndicator | ArticleIndicator[]) => {
+//     await clipped.addTag(indicator);
+//     const updated = await clipped.get();
+//     return updated;
+//   }
+// );
 
-const removeTag = createAsyncThunk(
-  'clipped/removeTag',
-  async (indicator: ArticleIndicator | ArticleIndicator[]) => {
-    await clipped.removeTag(indicator);
-    const updated = await clipped.get();
-    return updated;
-  }
-);
+// const removeTag = createAsyncThunk(
+//   'clipped/removeTag',
+//   async (indicator: ArticleIndicator | ArticleIndicator[]) => {
+//     await clipped.removeTag(indicator);
+//     const updated = await clipped.get();
+//     return updated;
+//   }
+// );
 
 const pin = createAsyncThunk(
   'clipped/pin',
@@ -103,16 +105,28 @@ const unpin = createAsyncThunk(
   }
 );
 
+const togglePin = createAsyncThunk(
+  'clipped/togglePin',
+  async (indicator: ArticleIndicator, thunkAPI) => {
+    const state = thunkAPI.getState() as ReduxRootState;
+    const toggleTarget = state.clipped.articles.find((item) => isIndicated([indicator], item));
+    if (!toggleTarget) return;
+    const relevantAction = toggleTarget.pinned ? unpin(indicator) : pin(indicator);
+    await thunkAPI.dispatch(relevantAction);    
+  }
+)
+
 export default {
   set,
   remove,
   initialize,
   unclip,
-  addTag,
-  removeTag,
+  // addTag,
+  // removeTag,
   pin,
   unpin,
   push,
   get,
   clearTags,
+  togglePin,
 }

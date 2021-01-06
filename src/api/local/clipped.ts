@@ -16,20 +16,18 @@ const dummy: Clipped = {
   pinned: false,
   tag: [],
   photo_url: "",
+  clipped: true,
 }
 const keys = Object.keys(dummy);
 
 const _validateItem = (item: any) => {
   const isObject = typeof item === "object"
   if (!isObject) return false;
-  const validityMap = Object.entries(item).map(([key, value]) => {
-    const isValidKey = keys.indexOf(key) !== -1;
-    //@ts-ignore
-    const isValidValue = typeof value === typeof dummy[key];
-    return isValidKey && isValidValue;
-  });
-  const isAllValid = validityMap.filter((bool) => !bool).length === 0;
-  return isAllValid;
+  const vaildityMap = keys
+    .map((key) => typeof item[key] === typeof dummy[key as keyof Clipped])
+    .filter((bool) => !bool)
+  const hasRequiredValues = vaildityMap.length === 0
+  return hasRequiredValues;
 }
 
 const _validateData = <T>(data: any): T | null => {
@@ -95,13 +93,13 @@ const unpin = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   return set(mapped);
 }
 
-const addTag = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
+const addTag = async(indicator: ArticleIndicator | ArticleIndicator[], tag: string) => {
+  if (tag === "") return;
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
     const indicatorIndex = getIndicatorIndex(indicators, item);
     if (indicatorIndex === -1) return item;
-    const { tag = "" } = indicators[indicatorIndex];
     const filteredTag = item.tag
       ? item.tag.filter((str) => str !== tag).concat(tag)
       : [tag];
@@ -110,13 +108,13 @@ const addTag = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
   return set(mapped);
 }
 
-const removeTag = async(indicator: ArticleIndicator | ArticleIndicator[]) => {
+const removeTag = async(indicator: ArticleIndicator | ArticleIndicator[], tag: string) => {
+  if (tag === "") return;
   const indicators = mapToArray(indicator);
   const storedData = await get();
   const mapped = storedData.map((item) => {
     const indicatorIndex = getIndicatorIndex(indicators, item);
     if (indicatorIndex === -1) return item;
-    const { tag = "" } = indicators[indicatorIndex];
     const filteredTag = item.tag?.filter((str) => str !== tag);
     return {...item, tag: filteredTag};
   });

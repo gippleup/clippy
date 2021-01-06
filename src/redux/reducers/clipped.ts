@@ -12,9 +12,12 @@ const initialState: ClippedState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actions.addTag.fulfilled, (state, action) => {
-      state.articles = action.payload;
-    })
+    // .addCase(actions.addTag.fulfilled, (state, action) => {
+    //   state.articles = action.payload;
+    // })
+    // .addCase(actions.removeTag.fulfilled, (state, action) => {
+    //   state.articles = action.payload;
+    // })
     .addCase(actions.clearTags.fulfilled, (state, action) => {
       state.articles = action.payload;
     })
@@ -31,9 +34,6 @@ const reducer = createReducer(initialState, (builder) => {
       state.articles = action.payload;
     })
     .addCase(actions.remove.fulfilled, (state, action) => {
-      state.articles = action.payload;
-    })
-    .addCase(actions.removeTag.fulfilled, (state, action) => {
       state.articles = action.payload;
     })
     .addCase(actions.set.fulfilled, (state, action) => {

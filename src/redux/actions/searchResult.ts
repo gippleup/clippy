@@ -46,7 +46,8 @@ const clip = createAsyncThunk(
     })
     const clipTargets = state.searchResult.result.filter((item) => isIndicated(indicators, item));
     if (clipTargets.length === 0) return state.searchResult;
-    await thunkAPI.dispatch(clippedActions.push(clipTargets));
+    const mappedTargets = clipTargets.map((item) => converToClipped(item))
+    await thunkAPI.dispatch(clippedActions.push(mappedTargets));
     const updated = {result: mappedResult}
     return updated;
   }

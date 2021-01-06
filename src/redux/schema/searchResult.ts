@@ -14,9 +14,9 @@ export type ShortenedArticle = {
   photo_url: string;
 }
 
-export type Clipped = ShortenedArticle & {
-  pinned?: boolean;
-  tag?: string[];
+export type Clipped = SearchResult & {
+  pinned: boolean;
+  tag: string[];
 }
 
-export type ArticleIndicator = Pick<Clipped, "id" | "publisher"> & {tag?: string};
+export type ArticleIndicator = Pick<Clipped, "id" | "publisher">
