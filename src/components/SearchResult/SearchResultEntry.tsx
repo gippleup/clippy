@@ -1,13 +1,13 @@
 import { getComponentConstant } from '@api/constants';
-import { useNavigation } from '@react-navigation/native';
-import { SearchResult } from '@redux/schema/searchResult';
+import ClipButton from '@components/ClipButton';
+import { ArticleIndicator, SearchResult } from '@redux/schema/searchResult';
 import React from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native'
-import { TapGestureHandler, TouchableOpacity } from 'react-native-gesture-handler';
-import WebView from 'react-native-webview';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native'
 
 type SearchResultEntryProps = {
   item: SearchResult;
+  onPress: (url: string) => any;
+  onPressClip: (indicator: ArticleIndicator) => any;
 };
 
 const {
@@ -19,18 +19,27 @@ const {
 const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
   const {item} = props;
   const {headline, abstract, clipped, id, pub_date, publisher, web_url, photo_url} = item;
-  const navigation = useNavigation();
-  const onPress = () => {
-    navigation.navigate("ArticleViewer", {url: web_url})
-  }
+  const onPress = () => props.onPress(web_url);
+  const onPressClip = () => props.onPressClip({
+    id,
+    publisher,
+  })
   return (
     <View style={styles.container}>
       <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
         <ImageBackground blurRadius={2} style={styles.backgroundImage} source={{uri: photo_url}}>
           <View style={styles.backgroundImageCover} />
-          <Text style={styles.headline}>{headline}</Text>
-          <Text style={styles.abstract}>{pub_date}</Text>
-          <Text style={styles.abstract}>{abstract}</Text>
+          <View>
+            <Text style={styles.headline}>{headline}</Text>
+            <Text style={styles.abstract}>{pub_date}</Text>
+            <Text style={styles.abstract}>{abstract}</Text>
+          </View>
+          <View>
+            <ClipButton
+              clipped={clipped}
+              onPress={onPressClip}
+            />
+          </View>
         </ImageBackground>
       </TouchableOpacity>
     </View>
@@ -42,6 +51,7 @@ const styles = StyleSheet.create({
     width: SEARCH_RESULT_WIDTH,
     height: SEARCH_RESULT_HEIGHT,
     padding: 10,
+    justifyContent: "space-between"
   },
   backgroundImageCover: {
     backgroundColor: "rgba(0,0,0,0.5)",
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     marginHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: SEARCH_RESULT_MARGIN_BOTTOM,
     borderWidth: 1,
     borderRadius: 10,
     overflow: "hidden",
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
   },
   abstract: {
     color: "white",
-  }
+  },
 })
 
-export default SearchResultEntry
+export default React.memo(SearchResultEntry);

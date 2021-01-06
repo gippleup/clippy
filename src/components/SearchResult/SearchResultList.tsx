@@ -1,4 +1,5 @@
-import { SearchResult } from '@redux/schema/searchResult'
+import { getComponentConstant } from '@api/constants';
+import { ArticleIndicator, SearchResult } from '@redux/schema/searchResult'
 import React from 'react'
 import { View, Text, FlatList, FlatListProps, ListRenderItemInfo } from 'react-native'
 import SearchResultEntry from './SearchResultEntry'
@@ -8,22 +9,42 @@ type PropFromFlatList = "onEndReached" | "onEndReachedThreshold";
 
 type SearchResultListProps = {
   searchResults: SearchResult[];
-}
+  onPressEntry: (url: string) => any;
+  onPressClip: (indicator: ArticleIndicator) => any;
+} & Pick<FlatListProps<{}>, PropFromFlatList>
+
+const getItemLayout: FlatListProps<{}>["getItemLayout"] = (data, index: number) => ({
+  index,
+  length: SEARCH_RESULT_HEIGHT,
+  offset: (SEARCH_RESULT_HEIGHT + SEARCH_RESULT_MARGIN_BOTTOM) * index,
+})
 
 const SearchResultList: React.FC<SearchResultListProps> = (props) => {
-  const {searchResults} = props;
+  const {
+    searchResults,
+    onEndReached,
+    onPressEntry,
+    onPressClip,
+    onEndReachedThreshold,
+  } = props;
+
   const renderItem = (info: ListRenderItemInfo<SearchResult>) => (
-    <SearchResultEntry item={info.item} />
+    <SearchResultEntry
+      onPress={onPressEntry}
+      onPressClip={onPressClip}
+      item={info.item}
+    />
   )
 
   return (
-    <View>
-      <FlatList
-        data={searchResults}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+    <FlatList
+      getItemLayout={getItemLayout}
+      data={searchResults}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={onEndReachedThreshold}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+    />
   )
 }
 
