@@ -15,7 +15,7 @@ const colors = getAllColors();
 
 type ThemedComponentDefinition<AdditionalProp={}, BaseProp={}> = {
   baseComponent: React.ComponentClass<BaseProp> | React.FC<BaseProp>;
-  commonStyle?: FlattenSimpleInterpolation;
+  commonStyle?: FlattenSimpleInterpolation | ((props: AdditionalProp) => FlattenSimpleInterpolation);
   themeMapper: (colorTheme: ColorTheme, props: AdditionalProp) => FlattenSimpleInterpolation;
   themeStyle?: Partial<ComponentThemeDefinition>;
 }
@@ -37,7 +37,7 @@ const convertToStyled
   const {baseComponent, commonStyle, themeMapper, themeStyle} = definition;
   type AdditionalProps = PickAdditionalPropsFromDefinition<typeof definition>;
   const Styled = styled<typeof baseComponent>(baseComponent)<ThemedComponentBaseProp & AdditionalProps>`
-    ${commonStyle};
+    ${(props) => typeof commonStyle === "function" ? commonStyle(props) : commonStyle};
     ${({themeName, ...props}) => {
         const specifiedStyle = pickRelevantThemeStyle(themeName, themeStyle);
         return specifiedStyle || themeMapper(colors[themeName], props as AdditionalProps);
