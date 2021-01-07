@@ -2,10 +2,10 @@ import { defineThemedComponent } from "@utils/theme";
 import { Text } from "react-native";
 import { css } from "styled-components";
 
-export const ArticleHeadline = defineThemedComponent({
+export const ArticleHeadline = defineThemedComponent<{clipped: boolean}>({
   baseComponent: Text,
-  themeMapper: (colors) => css`
-    color: ${colors.primary};
+  themeMapper: (colors, {clipped}) => css`
+    color: ${clipped ? colors.secondary : colors.primary};
   `,
   commonStyle: css`
     font-weight: bold;

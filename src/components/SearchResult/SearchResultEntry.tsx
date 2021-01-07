@@ -40,7 +40,7 @@ const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
         <ImageBackground blurRadius={2} style={styles.backgroundImage} source={{uri: photo_url}}>
           <View style={styles.backgroundImageCover} />
           <View>
-            <ArticleHeadline>{shortenedHeadline}</ArticleHeadline>
+            <ArticleHeadline clipped={clipped}>{shortenedHeadline}</ArticleHeadline>
             <Text style={styles.abstract}>{relativeTime}</Text>
             <Text style={styles.abstract}>{shortenedAbstract}</Text>
           </View>

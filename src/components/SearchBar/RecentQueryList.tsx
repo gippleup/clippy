@@ -13,28 +13,33 @@ type RecentQueryListProps = {
 const RecentQueryList: React.FC<RecentQueryListProps> = (props) => {
   const {onPressDelete, onPressEntry, state} = props;
   const {queries, visible} = state;
+  const display = visible ? "flex" : "none";
   return (
-    <View style={[styles.columnReverse, {opacity: visible ? 1 : 0}]}>
-      {queries.map((q) => {
-        return (
-          <RecentQueryEntry
-            key={q}
-            text={q}
-            onPressEntry={onPressEntry}
-            onPressDelete={onPressDelete}
-          />
-        )
-      })}
+    <View style={[styles.columnReverse]}>
+      <View style={[styles.queryContainer, {display}]}>
+        {queries.map((q) => {
+          return (
+            <RecentQueryEntry
+              key={q}
+              text={q}
+              onPressEntry={onPressEntry}
+              onPressDelete={onPressDelete}
+            />
+          )
+        })}
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   columnReverse: {
-    flexDirection: "column-reverse",
     position: "absolute",
     zIndex: 1,
   },
+  queryContainer: {
+    flexDirection: "column-reverse",
+  }
 })
 
 export default RecentQueryList
