@@ -11,6 +11,8 @@ type IconOption = {
   color: CSSProperties["color"];
 }
 
+export const getIconSet = (pack: keyof typeof IconPack) => IconPack[pack]
+
 export const getIcon = (pack: keyof typeof IconPack, option: Partial<IconOption>) => {
   const {color = "red", name = "heart", size = 30} = option;
   const Icon = IconPack[pack]

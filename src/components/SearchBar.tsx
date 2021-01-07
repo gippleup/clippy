@@ -1,19 +1,15 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, View, Dimensions, Keyboard } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, Keyboard } from 'react-native'
 import useReduxQuery from '@hooks/useReduxQuery';
-import { TextInput } from 'react-native-gesture-handler';
-import { getIcon } from '@api/icons';
 import RecentQueryList from './SearchBar/RecentQueryList';
-import { FlexHorizontal } from '@styled/FlexHorizontal';
-import { getComponentConstant } from '@api/constants';
 import useReduxRecentQuery from '@hooks/useReduxRecentQuery';
-
-const {SEARCHBAR_HEIGHT, SEARCHBAR_PADDING, SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
+import _Styled from './SearchBar/_Styled/SearchBar';
+const {BarContainer, IconContainer, Input, Icon} = _Styled;
 
 const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
-  const {methods: QueryMethods, state} = useReduxQuery();
-  const {value} = state;
+  const {methods: QueryMethods, state: QueryState} = useReduxQuery();
+  const {value} = QueryState;
 
   const onChangeText = (text: string) => QueryMethods.set(text);
   const onPressSearchIcon = () => QueryMethods.search();
@@ -24,8 +20,6 @@ const SearchBar = () => {
     QueryMethods.set(q);
     QueryMethods.search();
   }
-
-  const SearchIcon = getIcon("FontAwesome", {name: "search", color: "white", size: 20});
 
   React.useEffect(() => {
     Keyboard.addListener("keyboardDidHide", hideRecentQuery);
@@ -39,18 +33,17 @@ const SearchBar = () => {
   return (
     <View style={styles.alignCenter}>
       <View style={styles.alignLeft}>
-        <FlexHorizontal onLayout={(e) => console.log(e.nativeEvent.layout.height)} style={styles.barContainer}>
-          <TextInput
+        <BarContainer>
+          <Input
             value={value}
-            style={styles.textInput}
             onChangeText={onChangeText}
           />
           <TouchableOpacity onPress={onPressSearchIcon}>
-            <View style={styles.iconContainer}>
-              {SearchIcon}
-            </View>
+            <IconContainer>
+              <Icon name="search" size={20} />
+            </IconContainer>
           </TouchableOpacity>
-        </FlexHorizontal>
+        </BarContainer>
         <View>
           <RecentQueryList
             onPressDelete={onPressDeleteRecentQuery}
@@ -69,25 +62,6 @@ const styles = StyleSheet.create({
   },
   alignLeft: {
     alignItems: "flex-start",
-  },
-  barContainer: {
-    alignItems: "center",
-    backgroundColor: "black",
-    borderRadius: 10,
-    padding: SEARCHBAR_PADDING,
-    height: SEARCHBAR_HEIGHT,
-  },
-  textInput: {
-    width: SEARCH_INPUT_WIDTH,
-    backgroundColor: "lightgrey",
-    borderRadius: 5,
-    borderWidth: 0.5,
-    borderColor: "black",
-  },
-  iconContainer: {
-    paddingHorizontal: 15,
-    backgroundColor: "black",
-    borderRadius: 10,
   },
 })
 

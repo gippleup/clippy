@@ -21,11 +21,10 @@ type SearchResultEntryProps = {
   item: SearchResult;
   onPress: (url: string) => any;
   onPressClip: (indicator: ArticleIndicator) => any;
-  theme?: SupportedColorTheme;
 };
 
 const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
-  const {item, theme="light"} = props;
+  const {item} = props;
   const {
     headline, abstract, clipped, id, pub_date,
     publisher, web_url, photo_url, clipStatus
@@ -41,7 +40,7 @@ const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
         <ImageBackground blurRadius={2} style={styles.backgroundImage} source={{uri: photo_url}}>
           <View style={styles.backgroundImageCover} />
           <View>
-            <ArticleHeadline themeName={theme}>{shortenedHeadline}</ArticleHeadline>
+            <ArticleHeadline>{shortenedHeadline}</ArticleHeadline>
             <Text style={styles.abstract}>{relativeTime}</Text>
             <Text style={styles.abstract}>{shortenedAbstract}</Text>
           </View>
@@ -90,5 +89,4 @@ export default React.memo(SearchResultEntry, (prev, next) => isAllTrue([
   prev.item.publisher === next.item.publisher,
   prev.item.clipStatus === next.item.clipStatus,
   prev.item.clipped === next.item.clipped,
-  prev.theme === next.theme,
 ]));

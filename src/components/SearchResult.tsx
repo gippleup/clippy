@@ -11,7 +11,7 @@ import SearchResultList from './SearchResult/SearchResultList';
 const SearchResult = () => {
   const {methods: SearchResultMethods, state: SearchResultState} = useReduxSearchResult();
   const {methods: QueryMethods} = useReduxQuery();
-  const {methods: ArticleViewerMethods, state} = useReduxArticleViewer();
+  const {methods: ArticleViewerMethods} = useReduxArticleViewer();
 
   const onEndReached = () => {
     QueryMethods.fetchNextPage();

@@ -1,9 +1,7 @@
-import { getComponentConstant, getScreenConstant } from '@api/constants';
-import useReduxQuery from '@hooks/useReduxQuery';
-import useReduxRecentQuery from '@hooks/useReduxRecentQuery'
+import { getComponentConstant } from '@api/constants';
 import { ReduxRootState } from '@redux/schema';
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import RecentQueryEntry from './RecentQueryEntry';
 
 type RecentQueryListProps = {
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: "column-reverse",
     position: "absolute",
     zIndex: 1,
-    paddingLeft: getComponentConstant("searchBar").SEARCHBAR_PADDING,
   },
 })
 

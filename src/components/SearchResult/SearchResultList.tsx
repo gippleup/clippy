@@ -2,7 +2,7 @@ import { SupportedColorTheme } from '@api/colortheme';
 import { getComponentConstant } from '@api/constants';
 import { ArticleIndicator, SearchResult } from '@redux/schema/searchResult'
 import React from 'react'
-import { View, Text, FlatList, FlatListProps, ListRenderItemInfo } from 'react-native'
+import { FlatList, FlatListProps, ListRenderItemInfo } from 'react-native'
 import SearchResultEntry from './SearchResultEntry'
 
 const {SEARCH_RESULT_HEIGHT, SEARCH_RESULT_MARGIN_BOTTOM, SEARCH_RESULT_WIDTH} = getComponentConstant("searchResult");
@@ -28,7 +28,6 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
     onPressEntry,
     onPressClip,
     onEndReachedThreshold,
-    theme="light",
   } = props;
 
   const renderItem = (info: ListRenderItemInfo<SearchResult>) => (
@@ -36,7 +35,6 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
       onPress={onPressEntry}
       onPressClip={onPressClip}
       item={info.item}
-      theme={theme}
     />
   )
 
