@@ -36,8 +36,20 @@ NYTIMES_API_KEY=XXXXXXXXXXXXXXXXX // 여기에 본인의 API키를 입력해주�
 # 중점
 ## 보기 좋고 쓰기도 좋은 리덕스
   - 이전 프로젝트(Sort.io)를 진행하면서 Redux를 급하게 만들면 어떤 참변이 일어날 수 있는지 잘 경험하였고, 깜끔하게 Redux를 정의하고 사용할 수 있게 신경썼습니다.
-  - 이를 위해 reduxjs/toolkit을 적극 활용했고, 각 redux스테이트마다 훅을 만들어 간편하게 쓸 수 있게 했습니다.
+  - 이를 위해 reduxjs/toolkit을 적극 활용했고 각 redux스테이트마다 훅을 만들어, 컴포넌트마다 redux를 간편하게 쓸 수 있게 했습니다.
 ```js
+/* 
+store state는 articleViewer, clipped, filter, query, recentQuery, searhcResult, theme로 구성되어 있고,
+각 state마다 hook이 제작되어 있습니다.
+- articleViewer => useReduxArticleViewer
+- clipped => useReduxClipped
+- filter => useReduxFilter
+- query => useReduxQuery
+- recentQuery => useReduxRecentQuery
+- searhResult => useReduxSearchResult
+- theme => useReduxTheme
+*/
+
 // useReduxQuery 사용 예제
 const {state, methods} = useReduxQuery();
 // state는 redux state를 methods는 redux action을 담고 있습니다.
@@ -82,12 +94,12 @@ export type ReduxHookMethod<T extends Actions> = {
 }
 
 export const mapActionsToHookMethod = <T extends Actions>(dispatch: ReturnType<typeof useDispatch>, actions: T): ReduxHookMethod<T> => {
-  const appenedDispatch = Object.entries(actions).map(([key, func]) => {
+  const appendedDispatch = Object.entries(actions).map(([key, func]) => {
     const method = (...args: Parameters<ActionCreator<any>>) => dispatch(func(...args));
     return [key, method] as const;
   });
   
-  const methodObj = appenedDispatch.reduce<Partial<ReduxHookMethod<T>>>((acc, ele) => {
+  const methodObj = appendedDispatch.reduce<Partial<ReduxHookMethod<T>>>((acc, ele) => {
     const [key, method] = ele;
     acc[key as keyof T] = method;
     return acc;
