@@ -5,6 +5,7 @@ import recentQuery from '@redux/reducers/recentQuery';
 import searchResult from '@redux/reducers/searchResult';
 import filter from '@redux/reducers/filter';
 import theme from '@redux/reducers/theme';
+import articleViewer from '@redux/reducers/articleViewer';
 
 const rootReducer = combineReducers({
   clipped,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   searchResult,
   filter,
   theme,
+  articleViewer,
 })
 
 export default rootReducer;

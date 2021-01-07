@@ -1,7 +1,9 @@
+import useReduxArticleViewer from '@hooks/useReduxArticleViewer';
 import useReduxBoot from '@hooks/useReduxBoot';
 import useReduxQuery from '@hooks/useReduxQuery';
 import useReduxSearchResult from '@hooks/useReduxSearchResult'
-import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@navigation/routes';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
 import React from 'react'
 import SearchResultList from './SearchResult/SearchResultList';
@@ -9,13 +11,16 @@ import SearchResultList from './SearchResult/SearchResultList';
 const SearchResult = () => {
   const {methods: SearchResultMethods, state: SearchResultState} = useReduxSearchResult();
   const {methods: QueryMethods} = useReduxQuery();
+  const {methods: ArticleViewerMethods, state} = useReduxArticleViewer();
+
   const onEndReached = () => {
     QueryMethods.fetchNextPage();
   }
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const onPressEntry = (url: string) => {
-    navigation.navigate("ArticleViewer", {url})
+    ArticleViewerMethods.load(url);
+    navigation.navigate("ArticleViewerScreen", {});
   }
 
   const onPressClip = (indicator: ArticleIndicator) => {

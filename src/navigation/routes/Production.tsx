@@ -1,5 +1,5 @@
 import { SCREEN_HEIGHT } from '@api/constants/generic';
-import ArticleViewer, { ArticleViewerParams, ArticleViewrInitialParams } from '@screens/ArticleViewer';
+import ArticleViewerScreen from '@screens/ArticleViewerScreen';
 import Main from '@screens/Main';
 import { defineCustomRoute } from '@utils/navigation';
 import { Easing } from 'react-native';
@@ -13,10 +13,10 @@ const routes = {
       headerShown: false,
     }
   }),
-  ArticleViewer: defineCustomRoute<ArticleViewerParams>({
+  ArticleViewerScreen: defineCustomRoute({
     devName: "아티클 뷰어",
-    component: ArticleViewer,
-    initialParams: ArticleViewrInitialParams,
+    component: ArticleViewerScreen,
+    initialParams: {},
     options: {
       headerShown: false,
       transitionSpec: {
