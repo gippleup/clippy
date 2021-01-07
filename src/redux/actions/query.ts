@@ -12,6 +12,15 @@ const clear = createAction<undefined>('query/clear');
 const setPage = createAction<number>('query/setPage');
 const setRefresing = createAction<boolean>('query/setRefreshing');
 
+const fetchSet = createAsyncThunk(
+  'query/fetchSet',
+  async (option: ArticleSearchOption, thunkAPI) => {
+    thunkAPI.dispatch(recentQueryActions.setVisiblity(false));
+    const searchResults = await newsApi.nyTimes.fetchArticles(option);
+    await thunkAPI.dispatch(searchRestulActions.set(searchResults));
+  }
+)
+
 const fetchPush = createAsyncThunk(
   'query/fetchPush',
   async (option: ArticleSearchOption, thunkAPI) => {
@@ -55,14 +64,14 @@ const fetchNextPage = createAsyncThunk(
   }
 )
 
-const refreshPage0 = createAsyncThunk(
-  'query/refreshPage0',
+const refresh = createAsyncThunk(
+  'query/refresh',
   async (args: undefined, thunkAPI) => {
     thunkAPI.dispatch(setRefresing(true));
     const state = thunkAPI.getState() as ReduxRootState;
     const {sort} = state.filter;
     const {value: q} = state.query;
-    await thunkAPI.dispatch(fetchPush({
+    await thunkAPI.dispatch(fetchSet({
       q,
       page: 0,
       sort,
@@ -77,9 +86,10 @@ export default {
   clear,
   setPage,
   setStatus,
+  fetchSet,
   fetchPush,
   fetchNextPage,
-  refreshPage0,
+  refresh,
   setRefresing,
   search,
 }

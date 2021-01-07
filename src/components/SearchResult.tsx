@@ -27,7 +27,7 @@ const SearchResult = () => {
     SearchResultMethods.toggleClip(indicator);
   }
 
-  const onRefresh = QueryMethods.refreshPage0;
+  const onRefresh = QueryMethods.refresh;
 
   useReduxBoot();
 
