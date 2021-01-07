@@ -1,10 +1,9 @@
 import { SCREEN_WIDTH } from '@api/constants/generic'
 import useReduxArticleViewer from '@hooks/useReduxArticleViewer'
 import React from 'react'
-import { ActivityIndicator } from 'react-native'
-import { View, Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import WebView from 'react-native-webview'
-import ArticleLoadingIndicator from './ArticleViewer/ArticleLoadingIndicator'
+import LoadingArticle from './ArticleViewer/LoadingArticle'
 
 const ArticleViewer = () => {
   const {state, methods} = useReduxArticleViewer();
@@ -17,7 +16,7 @@ const ArticleViewer = () => {
       containerStyle={styles.webContainer}
       source={{uri: state.url}}
       startInLoadingState
-      renderLoading={() => <ArticleLoadingIndicator/>}
+      renderLoading={() => <LoadingArticle/>}
       onLoadEnd={onLoadEnd}
     />
   )

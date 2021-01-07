@@ -1,4 +1,5 @@
 import { getScreenConstant } from '@api/constants'
+import LoadingResult from '@components/LoadingResult'
 import SearchBar from '@components/SearchBar'
 import SearchResult from '@components/SearchResult'
 import { PageContainer } from '@styled/PageContainer'
@@ -17,6 +18,7 @@ export class SearchArticle extends Component {
         <View style={styles.searchResultContainer}>
           <SearchResult/>
         </View>
+        <LoadingResult/>
       </PageContainer>
     )
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 
-const ArticleLoadingIndicator = () => {
+const LoadingArticle = () => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="black" />
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ArticleLoadingIndicator
+export default LoadingArticle

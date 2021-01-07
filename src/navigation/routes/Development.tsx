@@ -4,7 +4,7 @@ import LocalStorageTester from '@screens/Tester/LocalStorageTester';
 import RecentQueryApiTester from '@screens/Tester/RecentQueryApiTester';
 import SearchResultListTester from '@screens/Tester/SearchResultListTester';
 import SearchArticleTester from '@screens/Tester/SearchArticleTester';
-import ArticleLoadingIndicatorTester from '@screens/Tester/ArticleLoadingIndicatorTester';
+import LoadingArticle from '@screens/Tester/LoadingArticleTester';
 const routes = {
   SearchBarTester: defineCustomRoute({
     devName: "서치바 테스터",
@@ -31,9 +31,9 @@ const routes = {
     component: SearchArticleTester,
     initialParams: {},
   }),
-  ArticleLoadingIndicatorTester: defineCustomRoute({
+  LoadingArticle: defineCustomRoute({
     devName: "아티클 로딩 화면",
-    component: ArticleLoadingIndicatorTester,
+    component: LoadingArticle,
     initialParams: {},
   })
 }

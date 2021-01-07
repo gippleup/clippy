@@ -6,7 +6,9 @@ import { RootStackParamList } from '@navigation/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
 import React from 'react'
+import { View } from 'react-native';
 import SearchResultList from './SearchResult/SearchResultList';
+
 
 const SearchResult = () => {
   const {methods: SearchResultMethods, state: SearchResultState} = useReduxSearchResult();
@@ -30,13 +32,15 @@ const SearchResult = () => {
   useReduxBoot();
 
   return (
-    <SearchResultList
-      searchResults={SearchResultState.result}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={1}
-      onPressEntry={onPressEntry}
-      onPressClip={onPressClip}
-    />
+    <View>
+      <SearchResultList
+        searchResults={SearchResultState.result}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={1}
+        onPressEntry={onPressEntry}
+        onPressClip={onPressClip}
+      />
+    </View>
   )
 }
 
