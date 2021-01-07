@@ -1,8 +1,7 @@
+import { useReduxRecentQuery, useReduxQuery } from '@hooks/reduxHooks';
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View, Keyboard } from 'react-native'
-import useReduxQuery from '@hooks/useReduxQuery';
 import RecentQueryList from './SearchBar/RecentQueryList';
-import useReduxRecentQuery from '@hooks/useReduxRecentQuery';
 import _Styled from './SearchBar/_Styled/SearchBar';
 const {BarContainer, IconContainer, Input, Icon} = _Styled;
 
@@ -10,7 +9,6 @@ const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();
   const {value} = QueryState;
-
   const onChangeText = (text: string) => QueryMethods.set(text);
   const onPressSearchIcon = () => QueryMethods.search();
   const hideRecentQuery = () => RecentQueryMethods.setVisiblity(false);

@@ -1,9 +1,5 @@
 import React from 'react';
-import useReduxClipped from "./useReduxClipped";
-import useReduxFilter from "./useReduxFilter";
-import useReduxQuery from "./useReduxQuery";
-import useReduxRecentQuery from "./useReduxRecentQuery";
-import useReduxSearchResult from "./useReduxSearchResult";
+import { useReduxClipped, useReduxRecentQuery, useReduxFilter, useReduxQuery, useReduxSearchResult } from './reduxHooks';
 
 const useReduxBoot = () => {
   const {methods: clipped} = useReduxClipped();

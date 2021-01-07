@@ -1,4 +1,4 @@
-import useReduxTheme from "@hooks/useReduxTheme";
+import { useReduxTheme } from "@hooks/reduxHooks";
 import React from "react";
 import _util, { ThemedComponentDefinition } from './theme/_util';
 

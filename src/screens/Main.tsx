@@ -3,10 +3,10 @@ import { StatusBar, ViewStyle } from 'react-native'
 import SearchArticle from './SearchArticle';
 import ClippedArticle from './ClippedArticle';
 import { getIcon } from '@api/icons';
-import useReduxTheme from '@hooks/useReduxTheme';
 import chroma from 'chroma-js';
 import { getColorTheme } from '@api/colortheme';
 import { createMaterialTopTabNavigator, MaterialTopTabBarOptions } from '@react-navigation/material-top-tabs';
+import { useReduxTheme } from '@hooks/reduxHooks';
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -1,4 +1,6 @@
-import { useDispatch } from "react-redux";
+import ReduxActions from "@redux/actions";
+import { ReduxRootState } from "@redux/schema";
+import { useDispatch, useSelector } from "react-redux";
 import { ActionCreator } from "redux"
 
 type Actions = {[index: string]: ActionCreator<any>}
@@ -19,4 +21,20 @@ export const mapActionsToHookMethod = <T extends Actions>(dispatch: ReturnType<t
   }, {}) as ReduxHookMethod<T>;
   
   return methodObj;
+}
+
+// Actions are registered in redux/actions/index
+type RegisteredActionKeys = keyof typeof ReduxActions;
+type ReduxActionCollection = typeof ReduxActions;
+export const createReduxHook
+  : <K extends RegisteredActionKeys>(stateKey: K) => (() => {state: ReduxRootState[K], methods: ReduxHookMethod<ReduxActionCollection[K]>})
+  = (stateKey) => () => {
+  const state = useSelector((state: ReduxRootState) => state[stateKey]);
+  const dispatch = useDispatch();
+  const actions = ReduxActions[stateKey]
+  const methods = mapActionsToHookMethod(dispatch, actions);
+  return {
+    state,
+    methods,
+  };
 }

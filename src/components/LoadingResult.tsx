@@ -1,4 +1,4 @@
-import useReduxQuery from '@hooks/useReduxQuery';
+import { useReduxQuery } from '@hooks/reduxHooks';
 import React from 'react'
 import Animated, { useValue } from 'react-native-reanimated';
 import _Reanimated from './LoadingResult/_Reanimated';

@@ -1,5 +1,5 @@
 import { SCREEN_WIDTH } from '@api/constants/generic'
-import useReduxArticleViewer from '@hooks/useReduxArticleViewer'
+import { useReduxArticleViewer } from '@hooks/reduxHooks'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import WebView from 'react-native-webview'

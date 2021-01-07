@@ -1,7 +1,6 @@
-import useReduxArticleViewer from '@hooks/useReduxArticleViewer';
+
+import { useReduxClipped, useReduxQuery, useReduxArticleViewer } from '@hooks/reduxHooks';
 import useReduxBoot from '@hooks/useReduxBoot';
-import useReduxClipped from '@hooks/useReduxClipped';
-import useReduxQuery from '@hooks/useReduxQuery';
 import { RootStackParamList } from '@navigation/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
