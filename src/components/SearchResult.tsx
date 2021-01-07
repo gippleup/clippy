@@ -9,7 +9,6 @@ import React from 'react'
 import { View } from 'react-native';
 import SearchResultList from './SearchResult/SearchResultList';
 
-
 const SearchResult = () => {
   const {methods: SearchResultMethods, state: SearchResultState} = useReduxSearchResult();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();

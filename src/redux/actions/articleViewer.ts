@@ -6,7 +6,6 @@ const setStatus = createAction<ArticleViewerState["status"]>('articleViewer/setS
 const load = createAsyncThunk(
   'articleViwer/load',
   async (url: string, thunkAPI) => {
-    console.log(url);
     thunkAPI.dispatch(setUrl(url));
     thunkAPI.dispatch(setStatus("pending"));
   }

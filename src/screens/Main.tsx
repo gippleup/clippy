@@ -20,10 +20,19 @@ const TabNavigator = () => {
 
   const tabBarOptions: MaterialTopTabBarOptions = {
     style: tabBarStyle,
+    indicatorContainerStyle: {
+      transform: [{scaleY: -1}],
+    },
+    indicatorStyle: {
+      height: 3,
+    }
   }
 
   return (
-    <Tab.Navigator tabBarPosition="bottom" tabBarOptions={tabBarOptions}>
+    <Tab.Navigator
+      tabBarPosition="bottom"
+      tabBarOptions={tabBarOptions}
+    >
       <Tab.Screen
           name="Clipped"
           component={ClippedArticle}
