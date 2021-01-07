@@ -13,7 +13,7 @@ const {
 const Abstract = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${colors.secondary};
+    color: ${colors.surface};
   `,
 })
 
@@ -24,39 +24,55 @@ const Container = defineThemedComponent({
   `,
   commonStyle: css`
     margin-horizontal: 10px;
-    margin-bottom: ${SEARCH_RESULT_MARGIN_BOTTOM};
+    margin-bottom: ${SEARCH_RESULT_MARGIN_BOTTOM}px;
     border-width: 1px;
     border-radius: 10px;
     overflow: hidden;
-    elevation: 5;  
+    elevation: 5;
   `,
 })
 
-const BackgroundImage = defineThemedComponent({
+const ContentContainer = defineThemedComponent({
   baseComponent: ImageBackground,
   themeMapper: (colors) => css`
+  `,
+  commonStyle: css`
     width: ${SEARCH_RESULT_WIDTH}px;
     height: ${SEARCH_RESULT_HEIGHT}px;
-    padding: 10px;
     justify-content: space-between;
+    padding: 10px;
   `,
 });
 
-const BackgroundImageCover = defineThemedComponent({
+const BackgroundImageCover = defineThemedComponent<{clipped: boolean}>({
   baseComponent: View,
-  themeMapper: (colors) => css`
-    background-color: ${chroma(colors.surface).alpha(0.5).hex()};
+  themeMapper: (colors, {clipped}) => css`
+    background-color: ${
+      chroma(
+        chroma(colors.background)
+        .set("hsl.l", 1 - chroma(colors.surface).luminance()))
+        .alpha(clipped ? 0.8 : 0.5).hex()
+    };
   `,
   commonStyle: css`
     position: absolute;
     width: ${SEARCH_RESULT_WIDTH}px;
     height: ${SEARCH_RESULT_HEIGHT}px;
   `,
+});
+
+const PubDate = defineThemedComponent({
+  baseComponent: Text,
+  themeMapper: (colors) => css`
+    color: ${chroma(colors.surface).darken().hex()};
+  `,
+  commonStyle: css``,
 })
 
 export default {
   Container,
-  BackgroundImage,
+  ContentContainer,
   BackgroundImageCover,
   Abstract,
+  PubDate,
 }

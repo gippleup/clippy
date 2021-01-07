@@ -1,8 +1,26 @@
+import { getGenericConstant } from '@api/constants'
 import ClippedSearchResult from '@components/ClippedSearchResult'
 import { PageContainer } from '@styled/PageContainer'
-import { PageHeader } from '@styled/PageHeader'
+import { defineThemedComponent } from '@utils/theme'
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { css } from 'styled-components'
+const {PAGE_HEADER_HEIGHT} = getGenericConstant();
+
+const PageHeader = defineThemedComponent({
+  baseComponent: Text,
+  themeMapper: (colors) => css`
+    background-color: ${colors.background};
+    color: ${colors.secondary};
+  `,
+  commonStyle: css`
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    text-align-vertical: center;
+    height: ${PAGE_HEADER_HEIGHT}px;
+  `,
+})
 
 export class ClippedArticle extends Component {
   render() {

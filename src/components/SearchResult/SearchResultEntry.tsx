@@ -8,6 +8,14 @@ import { isAllTrue } from '@utils/condition';
 import moment from 'moment';
 import React from 'react'
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
+import _Styled from './_Styled/SearchResultEntry'
+const {
+  Abstract,
+  BackgroundImageCover,
+  ContentContainer,
+  Container,
+  PubDate,
+} = _Styled;
 
 const {
   SEARCH_RESULT_HEIGHT,
@@ -35,14 +43,14 @@ const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
   const onPress = props.onPress.bind(null, web_url);
   const onPressClip = props.onPressClip.bind(null, {id, publisher});
   return (
-    <View style={styles.container}>
+    <Container>
       <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
-        <ImageBackground blurRadius={2} style={styles.backgroundImage} source={{uri: photo_url}}>
-          <View style={styles.backgroundImageCover} />
+        <ContentContainer blurRadius={2} source={{uri: photo_url}}>
+          <BackgroundImageCover clipped={clipped}/>
           <View>
             <ArticleHeadline clipped={clipped}>{shortenedHeadline}</ArticleHeadline>
-            <Text style={styles.abstract}>{relativeTime}</Text>
-            <Text style={styles.abstract}>{shortenedAbstract}</Text>
+            <PubDate>{relativeTime}</PubDate>
+            <Abstract>{shortenedAbstract}</Abstract>
           </View>
           <View>
             <ClipButton
@@ -51,38 +59,11 @@ const SearchResultEntry: React.FC<SearchResultEntryProps> = (props) => {
               onPress={onPressClip}
             />
           </View>
-        </ImageBackground>
+        </ContentContainer>
       </TouchableOpacity>
-    </View>
+    </Container>
   )
 }
-
-const styles = StyleSheet.create({
-  backgroundImage: {
-    width: SEARCH_RESULT_WIDTH,
-    height: SEARCH_RESULT_HEIGHT,
-    padding: 10,
-    justifyContent: "space-between"
-  },
-  backgroundImageCover: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-    position: "absolute",
-    width: SEARCH_RESULT_WIDTH,
-    height: SEARCH_RESULT_HEIGHT,
-  },
-  container: {
-    backgroundColor: "white",
-    marginHorizontal: 10,
-    marginBottom: SEARCH_RESULT_MARGIN_BOTTOM,
-    borderWidth: 1,
-    borderRadius: 10,
-    overflow: "hidden",
-    elevation: 5,
-  },
-  abstract: {
-    color: "white",
-  },
-})
 
 export default React.memo(SearchResultEntry, (prev, next) => isAllTrue([
   prev.item.id === next.item.id,
