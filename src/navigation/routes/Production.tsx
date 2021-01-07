@@ -21,8 +21,11 @@ const routes = {
       headerShown: false,
       transitionSpec: {
         open: {
-          animation: "spring",
-          config: {},
+          animation: "timing",
+          config: {
+            duration: 300,
+            easing: Easing.inOut(Easing.ease),
+          },
         },
         close: {
           animation: "timing",
