@@ -38,18 +38,20 @@ NYTIMES_API_KEY=XXXXXXXXXXXXXXXXX // 여기에 본인의 API키를 입력해주�
   - 이전 프로젝트(Sort.io)를 진행하면서 Redux를 급하게 만들면 어떤 참변이 일어날 수 있는지 잘 경험하였고, 깜끔하게 Redux를 정의하고 사용할 수 있게 신경썼습니다.
   - 이를 위해 reduxjs/toolkit을 적극 활용했고 각 redux스테이트마다 훅을 만들어, 컴포넌트마다 redux를 간편하게 쓸 수 있게 했습니다.
 ```js
-/* 
-store state는 articleViewer, clipped, filter, query, recentQuery, searhcResult, theme로 구성되어 있고,
-각 state마다 hook이 제작되어 있습니다.
-- articleViewer => useReduxArticleViewer
-- clipped => useReduxClipped
-- filter => useReduxFilter
-- query => useReduxQuery
-- recentQuery => useReduxRecentQuery
-- searhResult => useReduxSearchResult
-- theme => useReduxTheme
-*/
+// redux state별로 훅이 준비되어 있습니다.
 
+// hook/reduxHooks.ts
+import { createReduxHook } from "@utils/redux";
+
+export const useReduxArticleViewer = createReduxHook("articleViewer");
+export const useReduxClipped = createReduxHook("clipped");
+export const useReduxFilter = createReduxHook("filter");
+export const useReduxQuery = createReduxHook("query");
+export const useReduxRecentQuery = createReduxHook("recentQuery");
+export const useReduxSearchResult = createReduxHook("searchResult");
+export const useReduxTheme = createReduxHook("theme");
+```
+```js
 // useReduxQuery 사용 예제
 const {state, methods} = useReduxQuery();
 // state는 redux state를 methods는 redux action을 담고 있습니다.
@@ -81,47 +83,34 @@ const SomeComponent = defineThemedComponent<{someCustomProp: boolean}>({
 ### 깜끔하게 정리된 api
   - api로직의 하부로직을 각 api별 폴더에 정리하고, 최상단에 있는 파일들은 단순한 interface를 가지도록 디자인했습니다.
 ### 깔끔하게 정리된 hooks
-  - mapActionsToHookMethod유틸을 제작하여 손쉽게 redux action 및 state를 사용할 수 있게 하였습니다.
-
+  - createReduxHook util을 제작하여 한줄로 redux hook을 제작할 수 있게 했습니다.
 ```js
-// mapActionsToHook Util
-import { useDispatch } from "react-redux";
-import { ActionCreator } from "redux"
-
-type Actions = {[index: string]: ActionCreator<any>}
-export type ReduxHookMethod<T extends Actions> = {
-  [K in keyof T]: (...args: Parameters<T[K]>) => ReturnType<T[K]>
-}
-
-export const mapActionsToHookMethod = <T extends Actions>(dispatch: ReturnType<typeof useDispatch>, actions: T): ReduxHookMethod<T> => {
-  const appendedDispatch = Object.entries(actions).map(([key, func]) => {
-    const method = (...args: Parameters<ActionCreator<any>>) => dispatch(func(...args));
-    return [key, method] as const;
-  });
-  
-  const methodObj = appendedDispatch.reduce<Partial<ReduxHookMethod<T>>>((acc, ele) => {
-    const [key, method] = ele;
-    acc[key as keyof T] = method;
-    return acc;
-  }, {}) as ReduxHookMethod<T>;
-  
-  return methodObj;
-}
-```
-
-```js
-// mapActionsToHookMethod 사용 예제
-const selectQuery = (state: ReduxRootState) => state.query;
-
-const useReduxQuery = () => {
-  const queryState = useSelector(selectQuery);
+type RegisteredActionKeys = keyof typeof ReduxActions;
+type ReduxActionCollection = typeof ReduxActions;
+export const createReduxHook
+  : <K extends RegisteredActionKeys>(stateKey: K) => (() => {state: ReduxRootState[K], methods: ReduxHookMethod<ReduxActionCollection[K]>})
+  = (stateKey) => () => {
+  const state = useSelector((state: ReduxRootState) => state[stateKey]);
   const dispatch = useDispatch();
-  const methods = mapActionsToHookMethod(dispatch, queryActions);
+  const actions = ReduxActions[stateKey]
+  const methods = mapActionsToHookMethod(dispatch, actions);
   return {
-    state: queryState,
+    state,
     methods,
   };
 }
+
+```
+
+```js
+// 예를 들어 redux state에 있는 theme이라는 state를 위한 hook은 아래와 같이 제작할 수 있습니다.
+export const useReduxTheme = createReduxHook("theme");
+
+// 그리고 이 훅은 이렇게 사용할 수 있습니다.
+...Inside Component...
+const {state, methods} = useReduxTheme();
+...
+
 ```
 
 ### 깔끔하게 정리된 컴포넌트
