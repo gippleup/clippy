@@ -3,23 +3,23 @@ import actions from '@redux/actions/theme';
 import { SupportedColorTheme } from "@api/colortheme";
 
 type ThemeState = {
-  name: SupportedColorTheme;
+  theme: SupportedColorTheme;
 }
 
 const initialState: ThemeState = {
-  name: "light",
+  theme: "light",
 }
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.get.fulfilled, (state, action) => {
-      state.name = action.payload;
+      state.theme = action.payload;
     })
     .addCase(actions.set.fulfilled, (state, action) => {
-      state.name = action.payload;
+      state.theme = action.payload;
     })
     .addCase(actions.initialize.fulfilled, (state, action) => {
-      state.name = action.payload;
+      state.theme = action.payload;
     })
     .addDefaultCase((state, action) => state)
 });

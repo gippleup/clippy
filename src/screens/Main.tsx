@@ -11,8 +11,8 @@ import { createMaterialTopTabNavigator, MaterialTopTabBarOptions } from '@react-
 const Tab = createMaterialTopTabNavigator();
 
 const TabNavigator = () => {
-  const {state: {name}} = useReduxTheme();
-  const {background} = getColorTheme(name);
+  const {state: {theme}} = useReduxTheme();
+  const {background} = getColorTheme(theme);
   const tabBarStyle: ViewStyle = {
     backgroundColor: background,
     borderTopColor: chroma(background).brighten().hex(),
