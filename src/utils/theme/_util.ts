@@ -22,7 +22,7 @@ type ThemedComponentDefinition<AdditionalProp={}, BaseProp={}> = {
 
 type PickAdditionalPropsFromDefinition<T extends ThemedComponentDefinition<any, any>>
   = T extends ThemedComponentDefinition<infer Additional, infer Base>
-    ? Additional & Base
+    ? Additional
     : never;
 
 const pickRelevantThemeStyle = (theme: SupportedColorTheme, themeStyle?: Partial<ComponentThemeDefinition>) => {
@@ -33,8 +33,7 @@ const pickRelevantThemeStyle = (theme: SupportedColorTheme, themeStyle?: Partial
 }
 
 const convertToStyled
-  : <A={}, P={}>(definition: ThemedComponentDefinition<A, P>) => any
-  = (definition) => {
+  = <A={}, P={}>(definition: ThemedComponentDefinition<A, P>) => {
   const {baseComponent, commonStyle, themeMapper, themeStyle} = definition;
   type AdditionalProps = PickAdditionalPropsFromDefinition<typeof definition>;
   const Styled = styled<typeof baseComponent>(baseComponent)<ThemedComponentBaseProp & AdditionalProps>`
