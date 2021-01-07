@@ -7,6 +7,7 @@ type QueryState = {
   value: string;
   page: number;
   status: QueryStateStatus;
+  refreshing: boolean,
   prevValue: string,
 }
 
@@ -14,6 +15,7 @@ const initialState: QueryState = {
   value: "",
   page: 0,
   status: "idle",
+  refreshing: false,
   prevValue: "",
 };
 
@@ -40,6 +42,9 @@ const queryReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.clear, (state) => {
       state.value = "";
+    })
+    .addCase(actions.setRefresing, (state, action) => {
+      state.refreshing = action.payload;
     })
 })
 

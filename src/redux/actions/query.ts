@@ -4,11 +4,22 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import searchRestulActions from './searchResult';
 import recentQueryActions from './recentQuery';
 import { QueryStateStatus } from "@redux/reducers/query";
+import { ArticleSearchOption } from "@api/news/nyTimes";
 
 const set = createAction<string>('query/set');
 const setStatus = createAction<QueryStateStatus>('query/setStatus');
 const clear = createAction<undefined>('query/clear');
 const setPage = createAction<number>('query/setPage');
+const setRefresing = createAction<boolean>('query/setRefreshing');
+
+const fetchPush = createAsyncThunk(
+  'query/fetchPush',
+  async (option: ArticleSearchOption, thunkAPI) => {
+    thunkAPI.dispatch(recentQueryActions.setVisiblity(false));
+    const searchResults = await newsApi.nyTimes.fetchArticles(option);
+    await thunkAPI.dispatch(searchRestulActions.push(searchResults));
+  }
+)
 
 const search = createAsyncThunk(
   'query/search',
@@ -44,11 +55,31 @@ const fetchNextPage = createAsyncThunk(
   }
 )
 
+const refreshPage0 = createAsyncThunk(
+  'query/refreshPage0',
+  async (args: undefined, thunkAPI) => {
+    thunkAPI.dispatch(setRefresing(true));
+    const state = thunkAPI.getState() as ReduxRootState;
+    const {sort} = state.filter;
+    const {value: q} = state.query;
+    await thunkAPI.dispatch(fetchPush({
+      q,
+      page: 0,
+      sort,
+    }));
+    thunkAPI.dispatch(setRefresing(false));
+  }
+)
+
+
 export default {
   set,
   clear,
   setPage,
   setStatus,
+  fetchPush,
   fetchNextPage,
+  refreshPage0,
+  setRefresing,
   search,
 }

@@ -12,14 +12,12 @@ import SearchResultList from './SearchResult/SearchResultList';
 
 const SearchResult = () => {
   const {methods: SearchResultMethods, state: SearchResultState} = useReduxSearchResult();
-  const {methods: QueryMethods} = useReduxQuery();
+  const {methods: QueryMethods, state: QueryState} = useReduxQuery();
   const {methods: ArticleViewerMethods} = useReduxArticleViewer();
-
-  const onEndReached = () => {
-    QueryMethods.fetchNextPage();
-  }
-
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const onEndReached = QueryMethods.fetchNextPage;
+
   const onPressEntry = (url: string) => {
     ArticleViewerMethods.load(url);
     navigation.navigate("ArticleViewerScreen", {});
@@ -28,6 +26,8 @@ const SearchResult = () => {
   const onPressClip = (indicator: ArticleIndicator) => {
     SearchResultMethods.toggleClip(indicator);
   }
+
+  const onRefresh = QueryMethods.refreshPage0;
 
   useReduxBoot();
 
@@ -39,6 +39,8 @@ const SearchResult = () => {
         onEndReachedThreshold={1}
         onPressEntry={onPressEntry}
         onPressClip={onPressClip}
+        onRefresh={onRefresh}
+        refreshing={QueryState.refreshing}
       />
     </View>
   )

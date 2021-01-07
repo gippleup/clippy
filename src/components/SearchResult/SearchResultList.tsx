@@ -2,7 +2,7 @@ import { SupportedColorTheme } from '@api/colortheme';
 import { getComponentConstant } from '@api/constants';
 import { ArticleIndicator, SearchResult } from '@redux/schema/searchResult'
 import React from 'react'
-import { FlatList, FlatListProps, ListRenderItemInfo } from 'react-native'
+import { FlatList, FlatListProps, ListRenderItemInfo, RefreshControl } from 'react-native'
 import SearchResultEntry from './SearchResultEntry'
 
 const {SEARCH_RESULT_HEIGHT, SEARCH_RESULT_MARGIN_BOTTOM, SEARCH_RESULT_WIDTH} = getComponentConstant("searchResult");
@@ -12,7 +12,8 @@ type SearchResultListProps = {
   searchResults: SearchResult[];
   onPressEntry: (url: string) => any;
   onPressClip: (indicator: ArticleIndicator) => any;
-  theme?: SupportedColorTheme;
+  onRefresh?: () => any;
+  refreshing?: boolean;
 } & Pick<FlatListProps<{}>, PropFromFlatList>
 
 const getItemLayout: FlatListProps<{}>["getItemLayout"] = (data, index: number) => ({
@@ -23,11 +24,13 @@ const getItemLayout: FlatListProps<{}>["getItemLayout"] = (data, index: number) 
 
 const SearchResultList: React.FC<SearchResultListProps> = (props) => {
   const {
-    searchResults,
-    onEndReached,
-    onPressEntry,
+    onRefresh,
     onPressClip,
+    onPressEntry,
+    onEndReached,
+    searchResults,
     onEndReachedThreshold,
+    refreshing = false,
   } = props;
 
   const renderItem = (info: ListRenderItemInfo<SearchResult>) => (
@@ -38,6 +41,7 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
     />
   )
 
+
   return (
     <FlatList
       getItemLayout={getItemLayout}
@@ -46,6 +50,12 @@ const SearchResultList: React.FC<SearchResultListProps> = (props) => {
       onEndReachedThreshold={onEndReachedThreshold}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      )}
     />
   )
 }
