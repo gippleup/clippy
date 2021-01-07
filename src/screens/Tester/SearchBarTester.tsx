@@ -1,5 +1,5 @@
 import SearchBar from '@components/SearchBar'
-import useReduxSearchResult from '@hooks/useReduxSearchResult'
+import { useReduxSearchResult } from '@hooks/reduxHooks';
 import React from 'react'
 import { View, Text } from 'react-native'
 
