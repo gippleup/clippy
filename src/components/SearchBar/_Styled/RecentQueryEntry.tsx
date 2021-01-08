@@ -2,7 +2,7 @@ import { getComponentConstant } from "@api/constants";
 import { defineThemedComponent } from "@utils/theme";
 import chroma from "chroma-js";
 import { css } from "styled-components";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { getIconSet } from "@api/icons";
 import Animated from "react-native-reanimated";
 
@@ -16,6 +16,7 @@ const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated
   `,
   commonStyle: css`
     width: ${SEARCH_INPUT_WIDTH}px;
+    height: 40px;
     align-items: center;
     border-width: 1px;
     padding: 5px;
@@ -25,16 +26,18 @@ const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated
 });
 
 const QueryText = defineThemedComponent({
-  baseComponent: Text,
+  baseComponent: Animated.Text,
   themeMapper: (colors) => css`
     color: ${colors.secondary};
   `,
   commonStyle: css`
+    position: absolute;
+    left: 5px;
   `,
 })
 
 const IconContainer = defineThemedComponent({
-  baseComponent: View,
+  baseComponent: TouchableOpacity,
   themeMapper: (colors) => css`
     background-color: ${chroma(colors.background).darken().hex()};
   `,
@@ -44,7 +47,8 @@ const IconContainer = defineThemedComponent({
     height: 24px;
     justify-content: center;
     align-items: center;
-    margin-left: 5px;
+    position: absolute;
+    right: 5px;
   `,
 })
 

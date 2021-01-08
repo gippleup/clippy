@@ -9,6 +9,7 @@ import _Styled from './SearchBar/_Styled/SearchBar';
 const {BarContainer, IconContainer, Input, Icon} = _Styled;
 const {SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH} = getComponentConstant("searchBar");
 
+let some = 0;
 const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();
@@ -29,7 +30,10 @@ const SearchBar = () => {
   
   const onFocusInput = QueryMethods.setTyping.bind(null, true);
   const onBlurInput = QueryMethods.setTyping.bind(null, false);
-  const onChangeText = (text: string) => QueryMethods.set(text);
+  const onChangeText = (text: string) => {
+    QueryMethods.setTyping(true);
+    QueryMethods.set(text);
+  }
   const onPressSearchIcon = QueryMethods.search;
   const onKeyboardHide = () => {
     RecentQueryMethods.setVisiblity(false);

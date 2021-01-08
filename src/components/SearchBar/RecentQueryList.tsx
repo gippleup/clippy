@@ -22,7 +22,6 @@ const RecentQueryList: React.FC<RecentQueryListProps> = (props) => {
     from: 0, to: 1,
   })).current;
 
-  console.log(visible);
   React.useEffect(() => {
     anim.setValue(visible ? 1 : 0)
   })

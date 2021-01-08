@@ -18,9 +18,6 @@ const {
 } = _Styled;
 
 const {
-  SEARCH_RESULT_HEIGHT,
-  SEARCH_RESULT_WIDTH,
-  SEARCH_RESULT_MARGIN_BOTTOM,
   ABSTRACT_MAX_LENGTH,
   HEADLINE_MAX_LENGTH,
 } = getComponentConstant("searchResult");

@@ -1,4 +1,6 @@
 import { getComponentConstant } from '@api/constants';
+import { shortenWithTail } from '@utils/article';
+import { isAllTrue } from '@utils/condition';
 import { runTiming } from '@utils/reanimated';
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
@@ -32,15 +34,16 @@ const RecentQueryEntry = (props: RecentQueryEntryProps) => {
   return (
     <TouchableOpacity onPress={onPressEntry}>
       <Container style={{width}}>
-        <QueryText>{text}</QueryText>
-        <TouchableOpacity onPress={onPressDelete}>
-          <IconContainer>
-            <Icon name="remove" size={16} />
-          </IconContainer>
-        </TouchableOpacity>
+        <QueryText numberOfLines={1} ellipsizeMode="clip" style={{width}}>{shortenWithTail(text, 0, 20)}</QueryText>
+        <IconContainer onPress={onPressDelete}>
+          <Icon name="remove" size={16} />
+        </IconContainer>
       </Container>
     </TouchableOpacity>
   )
 }
 
-export default RecentQueryEntry;
+export default React.memo(RecentQueryEntry, (prev, next) => isAllTrue([
+  prev.text === next.text,
+  prev.visible === next.visible,
+]));
