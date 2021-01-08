@@ -61,10 +61,10 @@ const {state, methods} = useReduxQuery();
 
 ```js
 // defineThemedComponent를 사용한 컴포넌트 정의 예제
-const SomeComponent = defineThemedComponent<{someCustomProp: boolean}>({
+const SomeComponent = defineThemedComponent<{custom1: boolean, custom2: number, /*...other prop*/}>({
   baseComponent: View,
-  themeMapper: (colors) => css`
-  // redux에서 정의한 theme별로 스타일을 정의합니다.
+  themeMapper: (colors, {custom1, custom2, /*...other prop*/}) => css`
+  // redux에서 정의한 theme과 custom prop을 기반으로 스타일을 정의합니다.
   `,
   commonStyle: css`
   // theme과 관계없이 공통적으로 사용하는 스타일을 이곳에 정의합니다.
@@ -72,7 +72,7 @@ const SomeComponent = defineThemedComponent<{someCustomProp: boolean}>({
 });
 
 ...
-<SomeComponent someCustomProp={true} /> // Type체크됨.
+<SomeComponent custom1={true} custom2={10} {/*...other prop*/} /> // Type체크됨.
 ...
 ```
 
@@ -105,6 +105,20 @@ export const createReduxHook
 ```js
 // 예를 들어 redux state에 있는 theme이라는 state를 위한 hook은 아래와 같이 제작할 수 있습니다.
 export const useReduxTheme = createReduxHook("theme");
+
+// 만일 action에 미들웨어를 적용하고 싶다면 createReduxHook의 두번째 패러미터로 methodMapping오브젝트를 제공하면 됩니다.
+export const useReduxQuery = createReduxHook("query", {
+  search: (actionCreator, dispatch) => (...args) => {
+    // ...args는 redux action을 정의할 때 넘긴 parameter입니다.
+    // 여기에서는 queryState에서 새로운 검색어를 입력하여 검색할 때 이전에 실행중이던 query액션을 abort하는 미들웨어를 부착하고 있습니다.
+    queryPromiseManager.abortPrevious();
+    runAndRegisterToQueryManager(actionCreator, dispatch)(...args);
+  },
+  fetchNextPage: runAndRegisterToQueryManager,
+  fetchPush: runAndRegisterToQueryManager,
+  fetchSet: runAndRegisterToQueryManager,
+  refresh: runAndRegisterToQueryManager,
+});
 
 // 그리고 이 훅은 이렇게 사용할 수 있습니다.
 ...Inside Component...
