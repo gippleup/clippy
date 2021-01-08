@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import styled, { ThemedStyledFunction } from "styled-components";
 
 export const createStyledWithCustomProps

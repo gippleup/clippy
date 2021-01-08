@@ -2,20 +2,22 @@ import { getComponentConstant } from "@api/constants";
 import { defineThemedComponent } from "@utils/theme";
 import chroma from "chroma-js";
 import { css } from "styled-components";
-import { View, Text } from "react-native";
+import { View, Text, Animated, ViewProps } from "react-native";
 import { getIconSet } from "@api/icons";
 
+const {SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
+
 const Container = defineThemedComponent({
-  baseComponent: View,
+  baseComponent: Animated.View,
   themeMapper: (colors) => css`
     background-color: ${colors.surface};
     border-color: ${chroma(colors.surface).darken().hex()};
   `,
   commonStyle: css`
+    width: ${SEARCH_INPUT_WIDTH}px;
     align-items: center;
     border-width: 1px;
     padding: 5px;
-    width: ${getComponentConstant("searchBar").SEARCH_INPUT_WIDTH}px;
     justify-content: space-between;
     flex-direction: row;
   `,

@@ -7,8 +7,9 @@ type QueryState = {
   value: string;
   page: number;
   status: QueryStateStatus;
-  refreshing: boolean,
-  prevValue: string,
+  refreshing: boolean;
+  prevValue: string;
+  typing: boolean;
 }
 
 const initialState: QueryState = {
@@ -17,10 +18,14 @@ const initialState: QueryState = {
   status: "idle",
   refreshing: false,
   prevValue: "",
+  typing: false,
 };
 
 const queryReducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.setTyping, (state, action) => {
+      state.typing = action.payload;
+    })
     .addCase(actions.search.fulfilled, (state, action) => {
       state.prevValue = state.value;
       state.status = "idle";
@@ -45,6 +50,9 @@ const queryReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.setRefresing, (state, action) => {
       state.refreshing = action.payload;
+    })
+    .addDefaultCase((state, action) => {
+      return state;
     })
 })
 

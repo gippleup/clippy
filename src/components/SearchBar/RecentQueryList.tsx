@@ -22,6 +22,7 @@ const RecentQueryList: React.FC<RecentQueryListProps> = (props) => {
             <RecentQueryEntry
               key={q}
               text={q}
+              visible={visible}
               onPressEntry={onPressEntry}
               onPressDelete={onPressDelete}
             />

@@ -1,21 +1,27 @@
+import { defineThemedComponent } from '@utils/theme'
 import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import { css } from 'styled-components'
+
+const Container = defineThemedComponent({
+  baseComponent: View,
+  themeMapper: (colors) => css`
+    background-color: ${colors.background};  
+  `,
+  commonStyle: css`
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  `,
+})
 
 const LoadingArticle = () => {
   return (
-    <View style={styles.container}>
+    <Container>
       <ActivityIndicator size="large" color="black" />
-    </View>
+    </Container>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  }
-})
 
 export default LoadingArticle

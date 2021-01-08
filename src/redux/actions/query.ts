@@ -7,10 +7,11 @@ import { QueryStateStatus } from "@redux/reducers/query";
 import { ArticleSearchOption } from "@api/news/nyTimes";
 
 const set = createAction<string>('query/set');
-const setStatus = createAction<QueryStateStatus>('query/setStatus');
 const clear = createAction<undefined>('query/clear');
 const setPage = createAction<number>('query/setPage');
+const setTyping = createAction<boolean>('query/setTyping');
 const setRefresing = createAction<boolean>('query/setRefreshing');
+const setStatus = createAction<QueryStateStatus>('query/setStatus');
 
 const fetchSet = createAsyncThunk(
   'query/fetchSet',
@@ -92,4 +93,5 @@ export default {
   refresh,
   setRefresing,
   search,
+  setTyping,
 }

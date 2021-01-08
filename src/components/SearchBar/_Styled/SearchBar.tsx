@@ -1,5 +1,5 @@
 import { defineThemedComponent } from "@utils/theme";
-import { TextInput, View } from "react-native";
+import { Animated, TextInput, View } from "react-native";
 import { css } from "styled-components";
 import { getComponentConstant } from '@api/constants';
 import chroma from 'chroma-js'
@@ -22,7 +22,7 @@ const BarContainer = defineThemedComponent({
 });
 
 const Input = defineThemedComponent({
-  baseComponent: TextInput,
+  baseComponent: Animated.createAnimatedComponent(TextInput),
   themeMapper: (colors) => css`
     background-color: ${chroma(colors.surface).darken().hex()};
     border-color: ${colors.background};
