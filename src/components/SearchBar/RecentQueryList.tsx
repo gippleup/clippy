@@ -1,7 +1,10 @@
-import { getComponentConstant } from '@api/constants';
 import { ReduxRootState } from '@redux/schema';
+import { isAllTrue } from '@utils/condition';
+import { runTiming } from '@utils/reanimated';
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import Animated, { useValue } from 'react-native-reanimated';
+import { shallowEqual } from 'react-redux';
 import RecentQueryEntry from './RecentQueryEntry';
 
 type RecentQueryListProps = {
@@ -13,22 +16,32 @@ type RecentQueryListProps = {
 const RecentQueryList: React.FC<RecentQueryListProps> = (props) => {
   const {onPressDelete, onPressEntry, state} = props;
   const {queries, visible} = state;
-  const display = visible ? "flex" : "none";
+  const anim = useValue<number>(0);
+  const opacity = React.useRef(runTiming({
+    animatedSwitch: anim,
+    from: 0, to: 1,
+  })).current;
+
+  console.log(visible);
+  React.useEffect(() => {
+    anim.setValue(visible ? 1 : 0)
+  })
+
   return (
     <View style={[styles.columnReverse]}>
-      <View style={[styles.queryContainer, {display}]}>
+      <Animated.View style={[styles.queryContainer, {opacity}]}>
         {queries.map((q) => {
           return (
             <RecentQueryEntry
               key={q}
               text={q}
-              visible={visible}
               onPressEntry={onPressEntry}
               onPressDelete={onPressDelete}
+              visible={visible}
             />
           )
         })}
-      </View>
+      </Animated.View>
     </View>
   )
 }
@@ -43,4 +56,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RecentQueryList
+export default React.memo(RecentQueryList, (prev, next) => isAllTrue([
+  prev.state.visible === next.state.visible,
+  shallowEqual(prev.state.queries, next.state.queries),
+]))

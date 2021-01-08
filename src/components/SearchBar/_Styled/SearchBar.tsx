@@ -1,9 +1,10 @@
 import { defineThemedComponent } from "@utils/theme";
-import { Animated, TextInput, View } from "react-native";
+import { TextInput, TextInputProps, View } from "react-native";
 import { css } from "styled-components";
 import { getComponentConstant } from '@api/constants';
 import chroma from 'chroma-js'
 import { getIconSet } from "@api/icons";
+import Animated from "react-native-reanimated";
 const {SEARCHBAR_HEIGHT, SEARCHBAR_PADDING, SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
 
 const BarContainer = defineThemedComponent({
@@ -21,7 +22,7 @@ const BarContainer = defineThemedComponent({
   `,
 });
 
-const Input = defineThemedComponent({
+const Input = defineThemedComponent<{}, Animated.AnimateProps<{}, TextInputProps>>({
   baseComponent: Animated.createAnimatedComponent(TextInput),
   themeMapper: (colors) => css`
     background-color: ${chroma(colors.surface).darken().hex()};

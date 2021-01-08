@@ -1,8 +1,8 @@
 import { getComponentConstant } from '@api/constants';
-import { useAnimatedValue } from '@hooks/animatedHooks';
-import { animCondition, animSet } from '@utils/animated';
+import { runTiming } from '@utils/reanimated';
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
+import { useValue } from 'react-native-reanimated';
 import _Styled from './_Styled/RecentQueryEntry';
 
 const {SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH} = getComponentConstant("searchBar");
@@ -19,14 +19,19 @@ const RecentQueryEntry = (props: RecentQueryEntryProps) => {
   const {text, visible} = props;
   const onPressDelete = props.onPressDelete.bind(null, text);
   const onPressEntry = props.onPressEntry.bind(null, text);
-  const containerAnim = useAnimatedValue(0);
-  const width = animCondition(containerAnim, SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH);
-  const opacity = animCondition(containerAnim, 0, 1);
-  animSet({anim: containerAnim, to: visible ? 1 : 0, config: {duration: 300, delay: 100}});
+  const anim = useValue<number>(0);
+  const width = React.useRef(runTiming({
+    animatedSwitch: anim,
+    from: SEARCH_INPUT_WIDTH, to: SEARCH_INPUT_MAX_WIDTH,
+  })).current;
+
+  React.useEffect(() => {
+    anim.setValue(visible ? 1 : 0);
+  }, [visible])
 
   return (
     <TouchableOpacity onPress={onPressEntry}>
-      <Container style={{opacity: opacity, width}}>
+      <Container style={{width}}>
         <QueryText>{text}</QueryText>
         <TouchableOpacity onPress={onPressDelete}>
           <IconContainer>

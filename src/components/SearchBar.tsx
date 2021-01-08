@@ -1,9 +1,9 @@
 import { getComponentConstant } from '@api/constants';
-import { useAnimatedValue } from '@hooks/animatedHooks';
 import { useReduxRecentQuery, useReduxQuery } from '@hooks/reduxHooks';
-import { animCondition, animSet } from '@utils/animated';
+import { runTiming } from '@utils/reanimated';
 import React from 'react'
-import { TouchableOpacity, StyleSheet, View, Keyboard, Animated } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, Keyboard } from 'react-native'
+import { useValue, cond, eq, call } from 'react-native-reanimated';
 import RecentQueryList from './SearchBar/RecentQueryList';
 import _Styled from './SearchBar/_Styled/SearchBar';
 const {BarContainer, IconContainer, Input, Icon} = _Styled;
@@ -13,10 +13,20 @@ const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();
   const {value} = QueryState;
-  const inputAnim = useAnimatedValue(0);
-  const inputWidth = animCondition(inputAnim, SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH);
-  animSet({anim: inputAnim, to: QueryState.typing ? 1 : 0, deps: [QueryState.typing]});
+  const inputAnim = useValue<number>(0);
+  const inputWidth = React.useRef(runTiming({
+    animatedSwitch: inputAnim,
+    from: SEARCH_INPUT_WIDTH, to: SEARCH_INPUT_MAX_WIDTH,
+    onFinish: (args) => {
+      const [switchValue] = args;
+      if (switchValue === 1) RecentQueryMethods.setVisiblity(true);
+    }
+  })).current;
 
+  React.useEffect(() => {
+    inputAnim.setValue(QueryState.typing ? 1 : 0);
+  }, [QueryState.typing])
+  
   const onFocusInput = QueryMethods.setTyping.bind(null, true);
   const onBlurInput = QueryMethods.setTyping.bind(null, false);
   const onChangeText = (text: string) => QueryMethods.set(text);
@@ -26,7 +36,6 @@ const SearchBar = () => {
     QueryMethods.setTyping(false);
   }
   const onKeyboardShow = () => {
-    RecentQueryMethods.setVisiblity(true);
     QueryMethods.setTyping(true);
   }
   const onPressDeleteRecentQuery = (q: string) => RecentQueryMethods.remove(q);

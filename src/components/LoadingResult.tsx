@@ -14,11 +14,17 @@ const LoadingResult = () => {
 
   const loadingVisible = QueryState.status === "pending";
   const loadingVisibilityAnimation = useValue(loadingVisible ? 1 : 0);
-  const translateY = React.useRef(runTiming(loadingVisibilityAnimation, 30, 0)).current;
-  const opacity = React.useRef(runTiming(loadingVisibilityAnimation, 0, 1)).current;
+  const translateY = React.useRef(runTiming({
+    animatedSwitch: loadingVisibilityAnimation,
+    from: 30, to: 0,
+  })).current;
+  const opacity = React.useRef(runTiming({
+    animatedSwitch: loadingVisibilityAnimation,
+    from: 0, to: 1,
+  })).current;
 
   React.useEffect(() => {
-    loadingVisibilityAnimation.setValue(loadingVisible ? 0 : 1);
+    loadingVisibilityAnimation.setValue(loadingVisible ? 1 : 0);
   }, [loadingVisible]);
 
   return (

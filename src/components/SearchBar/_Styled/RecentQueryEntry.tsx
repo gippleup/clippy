@@ -2,12 +2,13 @@ import { getComponentConstant } from "@api/constants";
 import { defineThemedComponent } from "@utils/theme";
 import chroma from "chroma-js";
 import { css } from "styled-components";
-import { View, Text, Animated, ViewProps } from "react-native";
+import { View, Text } from "react-native";
 import { getIconSet } from "@api/icons";
+import Animated from "react-native-reanimated";
 
 const {SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
 
-const Container = defineThemedComponent({
+const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated.View>>({
   baseComponent: Animated.View,
   themeMapper: (colors) => css`
     background-color: ${colors.surface};
