@@ -9,5 +9,5 @@ const ColorPack = {
 export const ColorThems = Object.keys(ColorPack);
 export type SupportedColorTheme = keyof typeof ColorPack;
 
-export const getColorTheme = (theme: keyof typeof ColorPack) => ColorPack[theme];
+export const getThemeColors = (theme: keyof typeof ColorPack) => ColorPack[theme];
 export const getAllColors = () => ColorPack;

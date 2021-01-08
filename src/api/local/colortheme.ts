@@ -1,12 +1,12 @@
 import { ColorThems, SupportedColorTheme } from "@api/colortheme";
-import { setLocalData } from "@utils/storage";
+import { getLocalData, setLocalData } from "@utils/storage";
 
 const LOCAL_STORAGE_KEY = "COLOR_THEME";
 const defaultValue: SupportedColorTheme = "light";
 
 const initialize = async () => set(defaultValue);
 const _getValidData = async (): Promise<SupportedColorTheme> => {
-  const stored = await get();
+  const stored = await getLocalData(LOCAL_STORAGE_KEY);
   const isValid = typeof stored === "string"
     && ColorThems.indexOf(stored) !== -1;
   if (isValid) return stored as SupportedColorTheme;

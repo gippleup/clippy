@@ -4,6 +4,7 @@ import { RootStackParamList } from '@navigation/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
 import React from 'react'
+import NoClipped from './ClippedSearchResult/NoClipped';
 import SearchResultList from './SearchResult/SearchResultList';
 
 const ClippedSearchResult = () => {
@@ -23,6 +24,8 @@ const ClippedSearchResult = () => {
   const onPressClip = (indicator: ArticleIndicator) => {
     ClippedMethods.crossUnclip(indicator);
   }
+
+  if (ClippedState.articles.length === 0) return <NoClipped/>
 
   return (
     <SearchResultList

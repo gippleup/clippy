@@ -13,14 +13,13 @@ const {
 const Abstract = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${colors.surface};
+    color: ${chroma(colors.background).luminance() > 0.5 ? "white" : "grey"};
   `,
 })
 
 const Container = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${colors.background};
   `,
   commonStyle: css`
     margin-horizontal: 10px;
@@ -47,12 +46,12 @@ const ContentContainer = defineThemedComponent({
 const BackgroundImageCover = defineThemedComponent<{clipped: boolean}>({
   baseComponent: View,
   themeMapper: (colors, {clipped}) => css`
-    background-color: ${
-      chroma(
-        chroma(colors.background)
-        .set("hsl.l", 1 - chroma(colors.surface).luminance()))
-        .alpha(clipped ? 0.8 : 0.5).hex()
-    };
+    background-color: ${chroma("black")
+      .alpha(clipped
+          ? 0.7 * (1.5 - chroma(colors.background).luminance()) 
+          : 0.6 * (1.5 - chroma(colors.background).luminance())
+        )
+      .hex()};
   `,
   commonStyle: css`
     position: absolute;
@@ -64,7 +63,10 @@ const BackgroundImageCover = defineThemedComponent<{clipped: boolean}>({
 const PubDate = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${chroma(colors.surface).darken().hex()};
+    color: ${chroma(colors.background).luminance() > 0.5
+      ? chroma("white").darken().hex()
+      : chroma("grey").darken().hex()}
+    ;
   `,
   commonStyle: css``,
 })

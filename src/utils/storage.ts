@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const setLocalData = async <T>(key: string, value: T): Promise<boolean> => {
   try {
-    const jsonValue = JSON.stringify(value);
+    const jsonValue = typeof value === "string" ? value : JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
     return true;
   } catch (e) {

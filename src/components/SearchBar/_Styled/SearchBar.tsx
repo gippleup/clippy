@@ -10,12 +10,11 @@ const {SEARCHBAR_HEIGHT, SEARCHBAR_PADDING, SEARCH_INPUT_WIDTH} = getComponentCo
 const BarContainer = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${colors.surface};
+    /* background-color: transparent; */
   `,
   commonStyle: css`
     align-items: center;
     border-radius: 10px;
-    /* padding: ${SEARCHBAR_PADDING}px; */
     height: ${SEARCHBAR_HEIGHT}px;
     flex-direction: row;
     justify-content: center;
@@ -25,8 +24,9 @@ const BarContainer = defineThemedComponent({
 const Input = defineThemedComponent<{}, Animated.AnimateProps<{}, TextInputProps>>({
   baseComponent: Animated.createAnimatedComponent(TextInput),
   themeMapper: (colors) => css`
-    background-color: ${chroma(colors.surface).darken().hex()};
-    border-color: ${colors.background};
+    background-color: ${colors.background};
+    border-color: ${colors.primary};
+    color: ${chroma(colors.background).luminance() > 0.5 ? "black" : "grey"};
   `,
   commonStyle: css`
     width: ${SEARCH_INPUT_WIDTH}px;
@@ -38,11 +38,12 @@ const Input = defineThemedComponent<{}, Animated.AnimateProps<{}, TextInputProps
 const IconContainer = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${colors.background};
+    background-color: ${chroma.mix(colors.background, colors.primary, 0.2).hex()};
   `,
   commonStyle: css`
     padding: 10px;
     border-radius: 10px;
+    margin-left: 10px;
   `,
 })
 

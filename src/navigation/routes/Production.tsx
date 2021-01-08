@@ -19,6 +19,9 @@ const routes = {
     initialParams: {},
     options: {
       headerShown: false,
+      cardStyle: {
+        backgroundColor: "rgba(0,0,0,0.5)",
+      },
       transitionSpec: {
         open: {
           animation: "timing",
@@ -45,7 +48,7 @@ const routes = {
               inputRange: [0, 1],
               outputRange: [0.6, 1],
             })}
-          ]
+          ],
         },
         overlayStyle: {
           opacity: progress.interpolate({

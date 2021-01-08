@@ -4,6 +4,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
 import React from 'react'
 import { View } from 'react-native';
+import NoSearchResult from './SearchResult/NoSearchResult';
 import SearchResultList from './SearchResult/SearchResultList';
 
 const SearchResult = () => {
@@ -24,6 +25,10 @@ const SearchResult = () => {
   }
 
   const onRefresh = QueryMethods.refresh;
+
+  if (SearchResultState.result.length === 0) return (
+    <NoSearchResult/>
+  )
 
   return (
     <View>

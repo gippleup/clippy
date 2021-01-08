@@ -9,7 +9,6 @@ import _Styled from './SearchBar/_Styled/SearchBar';
 const {BarContainer, IconContainer, Input, Icon} = _Styled;
 const {SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH} = getComponentConstant("searchBar");
 
-let some = 0;
 const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();
@@ -22,6 +21,10 @@ const SearchBar = () => {
       const [switchValue] = args;
       if (switchValue === 1) RecentQueryMethods.setVisiblity(true);
     }
+  })).current;
+  const inputOpacity = React.useRef(runTiming({
+    animatedSwitch: inputAnim,
+    from: 0.5, to: 1,
   })).current;
 
   React.useEffect(() => {
@@ -63,10 +66,14 @@ const SearchBar = () => {
         <BarContainer>
           <Input
             value={value}
+            placeholder="검색해보자"
             onChangeText={onChangeText}
             onFocus={onFocusInput}
             onBlur={onBlurInput}
-            style={{width: inputWidth}}
+            style={{
+              width: inputWidth,
+              opacity: inputOpacity,
+            }}
           />
           <TouchableOpacity onPress={onPressSearchIcon}>
             <IconContainer>

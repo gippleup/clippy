@@ -11,14 +11,14 @@ const {SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
 const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated.View>>({
   baseComponent: Animated.View,
   themeMapper: (colors) => css`
-    background-color: ${colors.surface};
-    border-color: ${chroma(colors.surface).darken().hex()};
+    background-color: ${chroma.mix(colors.background, colors.primary, 0.05).hex()};
+    border-color: ${chroma(colors.primary).alpha(0.2).darken().hex()};
   `,
   commonStyle: css`
     width: ${SEARCH_INPUT_WIDTH}px;
     height: 40px;
     align-items: center;
-    border-width: 1px;
+    border-width: 0.5px;
     padding: 5px;
     justify-content: space-between;
     flex-direction: row;
@@ -28,20 +28,25 @@ const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated
 const QueryText = defineThemedComponent({
   baseComponent: Animated.Text,
   themeMapper: (colors) => css`
-    color: ${colors.secondary};
+    color: ${chroma(colors.background).luminance() > 0.5
+      ? chroma("black").brighten().hex()
+      : chroma("grey").darken().hex()};
   `,
   commonStyle: css`
     position: absolute;
     left: 5px;
+    color: black;
   `,
 })
 
 const IconContainer = defineThemedComponent({
   baseComponent: TouchableOpacity,
   themeMapper: (colors) => css`
-    background-color: ${chroma(colors.background).darken().hex()};
+    background-color: ${chroma(colors.background).hex()};
+    border-color: ${chroma(colors.primary).hex()};
   `,
   commonStyle: css`
+    border-width: 0.5px;
     border-radius: 5px;
     width: 24px;
     height: 24px;

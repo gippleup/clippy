@@ -4,7 +4,7 @@ import SearchArticle from './SearchArticle';
 import ClippedArticle from './ClippedArticle';
 import { getIcon } from '@api/icons';
 import chroma from 'chroma-js';
-import { getColorTheme } from '@api/colortheme';
+import { getThemeColors } from '@api/colortheme';
 import { createMaterialTopTabNavigator, MaterialTopTabBarOptions } from '@react-navigation/material-top-tabs';
 import { useReduxTheme } from '@hooks/reduxHooks';
 
@@ -12,19 +12,21 @@ const Tab = createMaterialTopTabNavigator();
 
 const TabNavigator = () => {
   const {state: {theme}} = useReduxTheme();
-  const {background} = getColorTheme(theme);
+  const {background, surface, secondary, primary} = getThemeColors(theme);
   const tabBarStyle: ViewStyle = {
-    backgroundColor: background,
-    borderTopColor: chroma(background).brighten().hex(),
+    backgroundColor: surface,
   }
 
   const tabBarOptions: MaterialTopTabBarOptions = {
     style: tabBarStyle,
+    inactiveTintColor: "grey",
+    activeTintColor: secondary,
     indicatorContainerStyle: {
       transform: [{scaleY: -1}],
     },
     indicatorStyle: {
       height: 3,
+      backgroundColor: secondary,
     }
   }
 

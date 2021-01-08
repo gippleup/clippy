@@ -1,10 +1,12 @@
 import { createColorTheme } from "./schema";
+import chroma from 'chroma-js';
 
 const colortheme = createColorTheme({
-  primary: "#ff6464",
-  secondary: "#543864",
-  background: "black",
-  surface: "grey",
+  primary: "orange",
+  secondary: "royalblue",
+  background: chroma("black").set("hsl.l", 0.05).hex(),
+  surface: "black",
+  error: "tomato",
 })
 
 export default colortheme;

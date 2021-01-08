@@ -10,8 +10,10 @@ type RunTimingParams = {
   from: number;
   to: number;
   onFinish?: (animatedSwitch: readonly number[]) => void;
+  duration?: number;
 }
-export const runTiming = ({animatedSwitch, from, to, onFinish}: RunTimingParams) => {
+
+export const runTiming = ({animatedSwitch, from, to, onFinish, duration=300}: RunTimingParams): Animated.Node<number> => {
   const clock = new Clock();
   const state: Animated.TimingState = {
     finished: new Value(0),
@@ -22,7 +24,7 @@ export const runTiming = ({animatedSwitch, from, to, onFinish}: RunTimingParams)
 
   const config = {
     toValue: new Value(-1),
-    duration: new Value(300),
+    duration: new Value(duration),
     easing: Easing.inOut(Easing.ease),
   };
 
