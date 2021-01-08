@@ -1,12 +1,8 @@
 import { useReduxQuery } from '@hooks/reduxHooks';
+import { runTiming } from '@utils/reanimated';
 import React from 'react'
 import Animated, { useValue } from 'react-native-reanimated';
-import _Reanimated from './LoadingResult/_Reanimated';
 import _Styled from './LoadingResult/_Styled';
-
-const {
-  runTiming,
-} = _Reanimated;
 
 const {
   FloatContainer,
@@ -22,7 +18,7 @@ const LoadingResult = () => {
   const opacity = React.useRef(runTiming(loadingVisibilityAnimation, 0, 1)).current;
 
   React.useEffect(() => {
-    loadingVisibilityAnimation.setValue(loadingVisible ? 1 : 0);
+    loadingVisibilityAnimation.setValue(loadingVisible ? 0 : 1);
   }, [loadingVisible]);
 
   return (

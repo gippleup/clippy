@@ -2,7 +2,7 @@ import Animated, { Easing, startClock, stopClock } from "react-native-reanimated
 
 const {Value, cond, Clock, timing, block, set, and, neq, eq} = Animated;
 
-const runTiming = (visible: Animated.Value<number>, onInvisible: number, onVisible: number) => {
+export const runTiming = (visible: Animated.Value<number>, from: number, to: number) => {
   const clock = new Clock();
   const state: Animated.TimingState = {
     finished: new Value(0),
@@ -24,22 +24,18 @@ const runTiming = (visible: Animated.Value<number>, onInvisible: number, onVisib
   ]
 
   return block([
-    cond(and(eq(visible, 1), neq(config.toValue, onVisible)), [
+    cond(and(eq(visible, 1), neq(config.toValue, from)), [
       ...resetAnimation(),
-      set(config.toValue, onVisible),
+      set(config.toValue, from),
       startClock(clock),
     ]),
-    cond(and(eq(visible, 0), neq(config.toValue, onInvisible)), [
+    cond(and(eq(visible, 0), neq(config.toValue, to)), [
       ...resetAnimation(),
-      set(config.toValue, onInvisible),
+      set(config.toValue, to),
       startClock(clock),
     ]),
     timing(clock, state, config),
     cond(state.finished, stopClock(clock)),
     state.position,
   ])
-}
-
-export default {
-  runTiming,
 }
