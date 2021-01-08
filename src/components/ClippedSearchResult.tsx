@@ -1,6 +1,5 @@
 
 import { useReduxClipped, useReduxQuery, useReduxArticleViewer } from '@hooks/reduxHooks';
-import useReduxBoot from '@hooks/useReduxBoot';
 import { RootStackParamList } from '@navigation/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
@@ -24,8 +23,6 @@ const ClippedSearchResult = () => {
   const onPressClip = (indicator: ArticleIndicator) => {
     ClippedMethods.crossUnclip(indicator);
   }
-
-  useReduxBoot();
 
   return (
     <SearchResultList

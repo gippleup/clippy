@@ -1,5 +1,4 @@
 import { useReduxSearchResult, useReduxQuery, useReduxArticleViewer } from '@hooks/reduxHooks';
-import useReduxBoot from '@hooks/useReduxBoot';
 import { RootStackParamList } from '@navigation/routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleIndicator } from '@redux/schema/searchResult';
@@ -25,8 +24,6 @@ const SearchResult = () => {
   }
 
   const onRefresh = QueryMethods.refresh;
-
-  useReduxBoot();
 
   return (
     <View>
