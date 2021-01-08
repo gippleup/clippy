@@ -16,4 +16,5 @@ const ReduxActions = {
   theme,
 }
 
+export type AppActionCollection = typeof ReduxActions;
 export default ReduxActions;
