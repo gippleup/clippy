@@ -39,7 +39,7 @@ type ThemeAppliedParts =
   | "LOADINGARTICLE_BACKGROUND"
   | "THEMETOGGLER_BACKGROUND"
 
-type ColorString = Extract<CSSProperties["color"], string>;
+export type ColorString = Extract<CSSProperties["color"], string>;
 type ColorTheme = {
   [Part in ThemeAppliedParts]: ColorString;
 };
