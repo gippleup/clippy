@@ -1,21 +1,50 @@
+import { CSSProperties } from "styled-components";
+
+type ThemeAppliedParts = 
+  "PAGE_HEADER_CLIPPED"
+  | "PAGE_HEADER_NOT_CLIPPED"
+  | "ARTICLE_HEADER_CLIPPED"
+  | "ARTICLE_HEADER_NOT_CLIPPED"
+  | "PAGE_CONTAINER"
+  | "ABSTRACT"
+  | "PUB_DATE"
+  | "CLIPBUTTON_CLIPPED_TEXT"
+  | "CLIPBUTTON_CLIPPED_BACKGROUND"
+  | "CLIPBUTTON_NOT_CLIPPED_TEXT"
+  | "CLIPBUTTON_NOT_CLIPPED_BACKGROUND"
+  | "BACKGROUNDCOVER_CLIPPED"
+  | "BACKGROUNDCOVER_NOT_CLIPPED"
+  | "NORESULT_BACKGROUND"
+  | "NORESULT_TEXT"
+  | "NOCLIPPED_BACKGROUND"
+  | "NOCLIPPED_TEXT"
+  | "SEARCHBAR_BORDER"
+  | "SEARCHBAR_BACKGROUND"
+  | "SEARCHBAR_PLACEHOLDER"
+  | "SEARCHBAR_TEXT"
+  | "SEARCHBUTTON_ICON"
+  | "SEARCHBUTTON_BACKGROUND"
+  | "RECENTQUERY_BACKGROUND"
+  | "RECENTQUERY_BORDER"
+  | "RECENTQUERY_TEXT"
+  | "RECENTQUERY_DELETE"
+  | "RECENTQUERY_DELETE_BACKGROUND"
+  | "RECENTQUERY_DELETE_BORDER"
+  | "TAB_BACKGROUND"
+  | "TAB_TEXT"
+  | "TAB_INDICATOR"
+  | "LOADINGRESULT_CIRCLE"
+  | "LOADINGRESULT_BACKGROUND"
+  | "LOADINGARTICLE_CIRCLE"
+  | "LOADINGARTICLE_BACKGROUND"
+  | "THEMETOGGLER_BACKGROUND"
+
+type ColorString = Extract<CSSProperties["color"], string>;
 type ColorTheme = {
-  primary: string;
-  secondary: string;
-  surface: string;
-  background: string;
-  error: string;
-}
+  [Part in ThemeAppliedParts]: ColorString;
+};
 
-const defaultSurfaceColor = "white";
-const defaultBackgroundColor = "white";
-const defaultErrorColor = "tomato";
-const defaultValues = {
-  surface: defaultSurfaceColor,
-  background: defaultBackgroundColor,
-  error: defaultErrorColor,
-}
-
-type CreateColorThemeOption = Pick<ColorTheme, "primary" | "secondary"> & Partial<ColorTheme>;
-export const createColorTheme = (option: CreateColorThemeOption): ColorTheme => ({...defaultValues, ...option})
+type CreateColorThemeOption = ColorTheme;
+export const createColorTheme = (option: CreateColorThemeOption): ColorTheme => option;
 
 export default ColorTheme;

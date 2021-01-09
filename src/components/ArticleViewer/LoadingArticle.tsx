@@ -9,7 +9,7 @@ import { css } from 'styled-components'
 const Container = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${colors.background};  
+    background-color: ${colors.LOADINGARTICLE_BACKGROUND};  
   `,
   commonStyle: css`
     width: 100%;
@@ -22,11 +22,10 @@ const Container = defineThemedComponent({
 const LoadingArticle = () => {
   const {state} = useReduxTheme();
   const colors = getThemeColors(state.theme);
-  const {background} = colors;
-  const color = chroma(background).luminance() > 0.5 ? "black" : "white";
+  const {LOADINGARTICLE_CIRCLE} = colors;
   return (
     <Container>
-      <ActivityIndicator size="large" color={color} />
+      <ActivityIndicator size="large" color={LOADINGARTICLE_CIRCLE} />
     </Container>
   )
 }

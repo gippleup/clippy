@@ -12,7 +12,7 @@ import { runTiming } from '@utils/reanimated';
 const IconContainer = defineThemedComponent({
   baseComponent: Animated.View,
   themeMapper: (colors) => css`
-    background-color: ${chroma(colors.background).luminance() > 0.5 ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)"};
+    background-color: ${colors.THEMETOGGLER_BACKGROUND};
   `,
   commonStyle: css`
     border-radius: 20px;
@@ -27,7 +27,7 @@ const IconContainer = defineThemedComponent({
 const Icon = defineThemedComponent({
   baseComponent: getIconSet("FontAwesome"),
   themeMapper: (colors) => css`
-    background-color: ${chroma(colors.background).luminance() > 0.5 ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)"};
+    background-color: ${chroma(colors.THEMETOGGLER_BACKGROUND).luminance() > 0.5 ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)"};
   `,
   commonStyle: css`
     height: 40px;

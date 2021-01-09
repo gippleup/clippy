@@ -20,7 +20,7 @@ const routes = {
     options: {
       headerShown: false,
       cardStyle: {
-        backgroundColor: "rgba(0,0,0,0.5)",
+        backgroundColor: "transparent"
       },
       transitionSpec: {
         open: {

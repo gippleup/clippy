@@ -11,8 +11,8 @@ const {SEARCH_INPUT_WIDTH} = getComponentConstant("searchBar");
 const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated.View>>({
   baseComponent: Animated.View,
   themeMapper: (colors) => css`
-    background-color: ${chroma.mix(colors.background, colors.primary, 0.05).hex()};
-    border-color: ${chroma(colors.primary).alpha(0.2).darken().hex()};
+    background-color: ${colors.RECENTQUERY_BACKGROUND};
+    border-color: ${colors.RECENTQUERY_BORDER};
   `,
   commonStyle: css`
     width: ${SEARCH_INPUT_WIDTH}px;
@@ -28,9 +28,7 @@ const Container = defineThemedComponent<{}, React.ComponentProps<typeof Animated
 const QueryText = defineThemedComponent({
   baseComponent: Animated.Text,
   themeMapper: (colors) => css`
-    color: ${chroma(colors.background).luminance() > 0.5
-      ? chroma("black").brighten().hex()
-      : chroma("grey").darken().hex()};
+    color: ${colors.RECENTQUERY_TEXT};
   `,
   commonStyle: css`
     position: absolute;
@@ -42,8 +40,8 @@ const QueryText = defineThemedComponent({
 const IconContainer = defineThemedComponent({
   baseComponent: TouchableOpacity,
   themeMapper: (colors) => css`
-    background-color: ${chroma(colors.background).hex()};
-    border-color: ${chroma(colors.primary).hex()};
+    background-color: ${chroma(colors.RECENTQUERY_DELETE_BACKGROUND).hex()};
+    border-color: ${chroma(colors.RECENTQUERY_BORDER).hex()};
   `,
   commonStyle: css`
     border-width: 0.5px;
@@ -60,7 +58,7 @@ const IconContainer = defineThemedComponent({
 const Icon = defineThemedComponent({
   baseComponent: getIconSet("FontAwesome"),
   themeMapper: (colors) => css`
-    color: ${colors.error};
+    color: ${colors.RECENTQUERY_DELETE};
   `,
 })
 

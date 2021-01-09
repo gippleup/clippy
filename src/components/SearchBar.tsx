@@ -1,5 +1,6 @@
+import { getThemeColors } from '@api/colortheme';
 import { getComponentConstant } from '@api/constants';
-import { useReduxRecentQuery, useReduxQuery } from '@hooks/reduxHooks';
+import { useReduxRecentQuery, useReduxQuery, useReduxTheme } from '@hooks/reduxHooks';
 import { runTiming } from '@utils/reanimated';
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View, Keyboard } from 'react-native'
@@ -12,6 +13,8 @@ const {SEARCH_INPUT_WIDTH, SEARCH_INPUT_MAX_WIDTH} = getComponentConstant("searc
 const SearchBar = () => {
   const {methods: RecentQueryMethods, state: RecentQueryState} = useReduxRecentQuery();
   const {methods: QueryMethods, state: QueryState} = useReduxQuery();
+  const {state: ThemeState} = useReduxTheme();
+  const {theme} = ThemeState
   const {value} = QueryState;
   const inputAnim = useValue<number>(0);
   const inputWidth = React.useRef(runTiming({
@@ -67,6 +70,7 @@ const SearchBar = () => {
           <Input
             value={value}
             placeholder="검색해보자"
+            placeholderTextColor={getThemeColors(theme).SEARCHBAR_PLACEHOLDER}
             onChangeText={onChangeText}
             onFocus={onFocusInput}
             onBlur={onBlurInput}

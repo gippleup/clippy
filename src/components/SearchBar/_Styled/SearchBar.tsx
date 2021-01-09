@@ -24,9 +24,9 @@ const BarContainer = defineThemedComponent({
 const Input = defineThemedComponent<{}, Animated.AnimateProps<{}, TextInputProps>>({
   baseComponent: Animated.createAnimatedComponent(TextInput),
   themeMapper: (colors) => css`
-    background-color: ${colors.background};
-    border-color: ${colors.primary};
-    color: ${chroma(colors.background).luminance() > 0.5 ? "black" : "grey"};
+    background-color: ${colors.SEARCHBAR_BACKGROUND};
+    border-color: ${colors.SEARCHBAR_BORDER};
+    color: ${colors.SEARCHBAR_TEXT};
   `,
   commonStyle: css`
     width: ${SEARCH_INPUT_WIDTH}px;
@@ -38,7 +38,7 @@ const Input = defineThemedComponent<{}, Animated.AnimateProps<{}, TextInputProps
 const IconContainer = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${chroma.mix(colors.background, colors.primary, 0.2).hex()};
+    background-color: ${colors.SEARCHBUTTON_BACKGROUND};
   `,
   commonStyle: css`
     padding: 10px;
@@ -51,7 +51,7 @@ const IconContainer = defineThemedComponent({
 const Icon = defineThemedComponent({
   baseComponent: getIconSet("FontAwesome"),
   themeMapper: (colors) => css`
-    color: ${colors.primary};
+    color: ${colors.SEARCHBUTTON_ICON};
   `,
   commonStyle: css``,
 })

@@ -12,7 +12,7 @@ const {
 const TextContainer = defineThemedComponent<{clipped: boolean}>({
   baseComponent: View,
   themeMapper: (colors, {clipped}) => css`
-    background-color: ${clipped ? chroma(colors.secondary).hex() : chroma(colors.primary).hex()};
+    background-color: ${clipped ? colors.CLIPBUTTON_CLIPPED_BACKGROUND : colors.CLIPBUTTON_NOT_CLIPPED_BACKGROUND};
   `,
   commonStyle: css`
     width: ${CLIPBUTTON_WIDTH}px;
@@ -26,7 +26,7 @@ const TextContainer = defineThemedComponent<{clipped: boolean}>({
 const ClipText = defineThemedComponent<{clipped: boolean}>({
   baseComponent: Text,
   themeMapper: (colors, {clipped}) => css`
-    color: ${clipped ? "white" : "black"};
+    color: ${clipped ? colors.CLIPBUTTON_CLIPPED_TEXT : colors.CLIPBUTTON_NOT_CLIPPED_TEXT};
   `,
   commonStyle: css`
     font-weight: bold;

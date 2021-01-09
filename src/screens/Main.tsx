@@ -12,21 +12,21 @@ const Tab = createMaterialTopTabNavigator();
 
 const TabNavigator = () => {
   const {state: {theme}} = useReduxTheme();
-  const {background, surface, secondary, primary} = getThemeColors(theme);
+  const {TAB_BACKGROUND, TAB_INDICATOR, TAB_TEXT} = getThemeColors(theme);
   const tabBarStyle: ViewStyle = {
-    backgroundColor: surface,
+    backgroundColor: TAB_BACKGROUND,
   }
 
   const tabBarOptions: MaterialTopTabBarOptions = {
     style: tabBarStyle,
     inactiveTintColor: "grey",
-    activeTintColor: secondary,
+    activeTintColor: TAB_TEXT,
     indicatorContainerStyle: {
       transform: [{scaleY: -1}],
     },
     indicatorStyle: {
       height: 3,
-      backgroundColor: secondary,
+      backgroundColor: TAB_INDICATOR,
     }
   }
 

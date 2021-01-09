@@ -7,7 +7,7 @@ type ThemeState = {
 }
 
 const initialState: ThemeState = {
-  theme: "light",
+  theme: "dark",
 }
 
 const reducer = createReducer(initialState, (builder) => {

@@ -10,8 +10,7 @@ const {PAGE_HEADER_HEIGHT} = getGenericConstant();
 const PageHeader = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    background-color: ${colors.background};
-    color: ${colors.secondary};
+    color: ${colors.PAGE_HEADER_CLIPPED};
   `,
   commonStyle: css`
     font-weight: bold;

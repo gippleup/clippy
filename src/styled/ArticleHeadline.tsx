@@ -5,7 +5,7 @@ import { css } from "styled-components";
 export const ArticleHeadline = defineThemedComponent<{clipped: boolean}>({
   baseComponent: Text,
   themeMapper: (colors, {clipped}) => css`
-    color: ${clipped ? colors.secondary : colors.primary};
+    color: ${clipped ? colors.ARTICLE_HEADER_CLIPPED : colors.ARTICLE_HEADER_NOT_CLIPPED};
   `,
   commonStyle: css`
     font-weight: bold;

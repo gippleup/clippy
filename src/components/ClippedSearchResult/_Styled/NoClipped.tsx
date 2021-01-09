@@ -6,7 +6,7 @@ import chroma from 'chroma-js'
 const Container = defineThemedComponent({
   baseComponent: View,
   themeMapper: (colors) => css`
-    background-color: ${chroma.mix(colors.background, colors.secondary, 0.5).hex()};
+    background-color: ${colors.NOCLIPPED_BACKGROUND};
   `,
   commonStyle: css`
     flex: 1;
@@ -20,7 +20,7 @@ const Container = defineThemedComponent({
 const GuideText = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${colors.secondary};
+    color: ${colors.NOCLIPPED_TEXT};
   `,
   commonStyle: css`
     font-size: 30px;

@@ -2,7 +2,6 @@ import { getComponentConstant } from "@api/constants";
 import { defineThemedComponent } from "@utils/theme";
 import { ImageBackground, Text, View } from "react-native";
 import { css } from "styled-components";
-import chroma from 'chroma-js'
 
 const {
   SEARCH_RESULT_HEIGHT,
@@ -13,7 +12,7 @@ const {
 const Abstract = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${chroma(colors.background).luminance() > 0.5 ? "white" : "grey"};
+    color: ${colors.ABSTRACT};
   `,
 })
 
@@ -46,12 +45,7 @@ const ContentContainer = defineThemedComponent({
 const BackgroundImageCover = defineThemedComponent<{clipped: boolean}>({
   baseComponent: View,
   themeMapper: (colors, {clipped}) => css`
-    background-color: ${chroma("black")
-      .alpha(clipped
-          ? 0.7 * (1.5 - chroma(colors.background).luminance()) 
-          : 0.6 * (1.5 - chroma(colors.background).luminance())
-        )
-      .hex()};
+    background-color: ${clipped ? colors.BACKGROUNDCOVER_CLIPPED : colors.BACKGROUNDCOVER_NOT_CLIPPED};
   `,
   commonStyle: css`
     position: absolute;
@@ -63,10 +57,7 @@ const BackgroundImageCover = defineThemedComponent<{clipped: boolean}>({
 const PubDate = defineThemedComponent({
   baseComponent: Text,
   themeMapper: (colors) => css`
-    color: ${chroma(colors.background).luminance() > 0.5
-      ? chroma("white").darken().hex()
-      : chroma("grey").darken().hex()}
-    ;
+    color: ${colors.PUB_DATE};
   `,
   commonStyle: css``,
 })
